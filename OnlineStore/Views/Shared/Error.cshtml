@@ -1,0 +1,15 @@
+﻿@model OnlineStore.Models.ViewModels.ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+@if (Model.Errors.Count() > 0)
+{
+    <ul>
+        @foreach (string Error in Model.Errors)
+        {
+            <li>@Error</li>
+        }
+    </ul>
+}

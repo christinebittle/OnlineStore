@@ -1,0 +1,43 @@
+﻿@model OnlineStore.Models.ViewModels.ProductViewModel
+
+
+<a href="/ProductPage/Delete/@Model.Product.ProductId">Delete</a>
+<a href="/ProductPage/Edit/@Model.Product.ProductId">Edit</a>
+<a href="/ProductPage/List">Back</a>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <label>Name</label>
+            <div>@Model.Product.ProductName</div>
+        </div>
+        <div>
+            <label>SKU</label>
+            <div>@Model.Product.ProductSKU</div>
+        </div>
+        
+        <div>
+            <label>Price</label>
+            <div>@Model.Product.ProductPrice</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div>
+            <label>Categories:</label>
+            <ul>
+                @foreach(var CategoryDto in Model.ProductCategories)
+                {
+                    <li><a href="/CategoryPage/Details/@CategoryDto.CategoryId">@CategoryDto.CategoryName</a></li>
+                }
+            </ul>
+            <form method="POST" action="/ProductPage/AssociateToCategory">
+                <input style="display:none" name="ProductId" value="@Model.Product.ProductId" />
+                <select name="CategoryId">
+                    @foreach(var CategoryDto in Model.AllCategories)
+                    {
+                       <option id="@CategoryDto.CategoryId">@CategoryDto.CategoryName</option> 
+                    }
+                </select>
+            </form>
+        </div>
+    </div>
+</div>

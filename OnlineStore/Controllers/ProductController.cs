@@ -1,0 +1,211 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineStore;
+using OnlineStore.Models;
+using OnlineStore.Interfaces;
+
+namespace CoreEntityFramework.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductService _productService;
+
+        // dependency injection of service interfaces
+        public ProductController(IProductService ProductService)
+        {
+            _productService = ProductService;
+        }
+
+
+        /// <summary>
+        /// Returns a list of Products
+        /// </summary>
+        /// <returns>
+        /// 200 OK
+        /// [{ProductDto},{ProductDto},..]
+        /// </returns>
+        /// <example>
+        /// GET: api/Product/List -> [{ProductDto},{ProductDto},..]
+        /// </example>
+        [HttpGet(template: "List")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> ListProducts()
+        {
+            // empty list of data transfer object ProductDto
+            IEnumerable<ProductDto> ProductDtos = await _productService.ListProducts();
+            // return 200 OK with ProductDtos
+            return Ok(ProductDtos);
+        }
+
+        /// <summary>
+        /// Returns a single Product specified by its {id}
+        /// </summary>
+        /// <param name="id">The Product id</param>
+        /// <returns>
+        /// 200 OK
+        /// {ProductDto}
+        /// or
+        /// 404 Not Found
+        /// </returns>
+        /// <example>
+        /// GET: api/Product/Find/1 -> {ProductDto}
+        /// </example>
+        [HttpGet(template: "Find/{id}")]
+        public async Task<ActionResult<ProductDto>> FindProduct(int id)
+        {
+
+            var Product = await _productService.FindProduct(id);
+
+            // if the Product could not be located, return 404 Not Found
+            if (Product == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(Product);
+            }
+        }
+
+        /// <summary>
+        /// Updates a Product
+        /// </summary>
+        /// <param name="id">The ID of the Product to update</param>
+        /// <param name="ProductDto">The required information to update the Product (ProductName, ProductColor)</param>
+        /// <returns>
+        /// 400 Bad Request
+        /// or
+        /// 404 Not Found
+        /// or
+        /// 204 No Content
+        /// </returns>
+        /// <example>
+        /// PUT: api/Product/Update/5
+        /// Request Headers: Content-Type: application/json
+        /// Request Body: {ProductDto}
+        /// ->
+        /// Response Code: 204 No Content
+        /// </example>
+        [HttpPut(template: "Update/{id}")]
+        public async Task<ActionResult> UpdateProduct(int id, ProductDto ProductDto)
+        {
+            // {id} in URL must match ProductId in POST Body
+            if (id != ProductDto.ProductId)
+            {
+                //400 Bad Request
+                return BadRequest();
+            }
+
+            ServiceResponse response = await _productService.UpdateProduct(ProductDto);
+
+            if (response.Status == ServiceResponse.ServiceStatus.NotFound)
+            {
+                return NotFound(response.Messages);
+            }
+            else if (response.Status == ServiceResponse.ServiceStatus.Error)
+            {
+                return StatusCode(500, response.Messages);
+            }
+
+            //Status = Updated
+            return NoContent();
+
+        }
+
+        /// <summary>
+        /// Adds a Product
+        /// </summary>
+        /// <param name="ProductDto">The required information to add the Product (ProductName, ProductColor)</param>
+        /// <returns>
+        /// 201 Created
+        /// Location: api/Product/Find/{ProductId}
+        /// {ProductDto}
+        /// or
+        /// 404 Not Found
+        /// </returns>
+        /// <example>
+        /// POST: api/Product/Add
+        /// Request Headers: Content-Type: application/json
+        /// Request Body: {ProductDto}
+        /// ->
+        /// Response Code: 201 Created
+        /// Response Headers: Location: api/Product/Find/{ProductId}
+        /// </example>
+        [HttpPost(template: "Add")]
+        public async Task<ActionResult<Product>> AddProduct(ProductDto ProductDto)
+        {
+            ServiceResponse response = await _productService.AddProduct(ProductDto);
+
+            if (response.Status == ServiceResponse.ServiceStatus.NotFound)
+            {
+                return NotFound(response.Messages);
+            }
+            else if (response.Status == ServiceResponse.ServiceStatus.Error)
+            {
+                return StatusCode(500, response.Messages);
+            }
+
+            // returns 201 Created with Location
+            return Created($"api/Product/FindProduct/{response.CreatedId}", ProductDto);
+        }
+
+        /// <summary>
+        /// Deletes the Product
+        /// </summary>
+        /// <param name="id">The id of the Product to delete</param>
+        /// <returns>
+        /// 204 No Content
+        /// or
+        /// 404 Not Found
+        /// </returns>
+        /// <example>
+        /// DELETE: api/Product/Delete/7
+        /// ->
+        /// Response Code: 204 No Content
+        /// </example>
+        [HttpDelete("Delete/{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            ServiceResponse response = await _productService.DeleteProduct(id);
+
+            if (response.Status == ServiceResponse.ServiceStatus.NotFound)
+            {
+                return NotFound();
+            }
+            else if (response.Status == ServiceResponse.ServiceStatus.Error)
+            {
+                return StatusCode(500, response.Messages);
+            }
+
+            return NoContent();
+
+        }
+
+
+
+        /// <summary>
+        /// Returns a list of products for a specific category by its {id}
+        /// </summary>
+        /// <returns>
+        /// 200 OK
+        /// [{ProductDto},{ProductDto},..]
+        /// </returns>
+        /// <example>
+        /// GET: api/Product/ListForCategory/3 -> [{ProductDto},{ProductDto},..]
+        /// </example>
+        [HttpGet(template: "ListForCategory/{id}")]
+        public async Task<IActionResult> ListProductsForCategory(int id)
+        {
+            // empty list of data transfer object ProductDto
+            IEnumerable<ProductDto> ProductDtos = await _productService.ListProductsForCategory(id);
+            // return 200 OK with CateDtos
+            return Ok(ProductDtos);
+        }
+    }
+}

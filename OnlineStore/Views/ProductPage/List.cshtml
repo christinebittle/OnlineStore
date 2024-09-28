@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ProductDto>
+
+<a href="/ProductPage/New">New</a>
+<div class="row">
+@foreach(var Product in Model)
+{
+    <div>
+        <a href="/ProductPage/Details/@Product.ProductId">@Product.ProductName $@Product.ProductPrice</a>
+    </div>
+}
+</div>
