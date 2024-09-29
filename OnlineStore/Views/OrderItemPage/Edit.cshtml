@@ -1,0 +1,61 @@
+﻿@model OnlineStore.Models.ViewModels.OrderItemEdit
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<h4>OrderItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update" asp-route-id="@Model.OrderItem.OrderItemId">
+            
+            <input type="hidden" name="OrderItemId" value="@Model.OrderItem.OrderItemId" />
+            <div class="form-group">
+                <label for="OrderItemUnitPrice">Price</label>
+                <input name="OrderItemUnitPrice"  value="@Model.OrderItem.OrderItemUnitPrice"/>
+            </div>
+            <div class="form-group">
+                <label for="OrderItemQty">Qty</label>
+                <input name="OrderItemQty" value="@Model.OrderItem.OrderItemQty" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.OrderItem.OrderId" class="control-label"></label>
+                <select name="OrderId">
+                @foreach(OrderDto orderDto in Model.OrderOptions)
+                {
+                        string preselect = "";
+                        if (orderDto.OrderId == Model.OrderItem.OrderId) preselect = "selected";
+                        <option value="@orderDto.OrderId" {@preselect}>#@orderDto.OrderId @orderDto.CustomerName @orderDto.OrderDate </option>
+
+                }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.OrderItem.ProductId" class="control-label"></label>
+                <select name="ProductId">
+                    @foreach (ProductDto ProductDto in Model.ProductOptions)
+                    {
+                        string preselect = "";
+                        if (ProductDto.ProductId == Model.OrderItem.ProductId) preselect = "selected";
+                        <option value="@ProductDto.ProductId" {@preselect}>#@ProductDto.ProductId @ProductDto.ProductSKU</option>
+
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

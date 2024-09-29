@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Models.ViewModels
 {
-    public class ProductViewModel
+    public class ProductDetails
     {
         //A product page must have a product
         public required ProductDto Product { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Models.ViewModels
 {
-    public class CategoryViewModel
+    public class CategoryDetails
     {
         //A category page must have a category
         public required CategoryDto Category {get;set;}

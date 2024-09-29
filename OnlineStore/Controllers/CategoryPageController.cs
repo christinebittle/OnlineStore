@@ -37,18 +37,18 @@ namespace OnlineStore.Controllers
             CategoryDto? CategoryDto = await _categoryService.FindCategory(id);
             IEnumerable<ProductDto> AssociatedProducts = await _productService.ListProductsForCategory(id);
 
-            // information which drives a category page
-            CategoryViewModel CategoryInfo = new CategoryViewModel() { 
-                Category = CategoryDto, 
-                CategoryProducts = AssociatedProducts 
-            };
-
             if (CategoryDto == null)
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find category"] });
             }
             else
             {
+                // information which drives a category page
+                CategoryDetails CategoryInfo = new CategoryDetails()
+                {
+                    Category = CategoryDto,
+                    CategoryProducts = AssociatedProducts
+                };
                 return View(CategoryInfo);
             }
         }

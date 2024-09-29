@@ -38,19 +38,19 @@ namespace OnlineStore.Controllers
             IEnumerable<CategoryDto> AssociatedCategories = await _categoryService.ListCategoriesForProduct(id);
             IEnumerable<CategoryDto> Categories = await _categoryService.ListCategories();
 
-            // information which drives a Product page
-            ProductViewModel ProductInfo = new ProductViewModel() { 
-                Product = ProductDto,  
-                ProductCategories = AssociatedCategories, 
-                AllCategories=Categories
-            };
-
             if (ProductDto == null)
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find Product"] });
             }
             else
             {
+                // information which drives a Product page
+                ProductDetails ProductInfo = new ProductDetails()
+                {
+                    Product = ProductDto,
+                    ProductCategories = AssociatedCategories,
+                    AllCategories = Categories
+                };
                 return View(ProductInfo);
             }
         }

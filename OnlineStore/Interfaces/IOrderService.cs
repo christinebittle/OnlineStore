@@ -5,7 +5,7 @@ namespace OnlineStore.Interfaces
     public interface IOrderService
     {
         // ListOrders
-        IEnumerable<OrderDto> ListOrders();
+        Task<IEnumerable<OrderDto>> ListOrders();
 
         // FindOrder(int id)
 
