@@ -139,5 +139,23 @@ namespace OnlineStore.Controllers
                 return View("Error", new ErrorViewModel() { Errors = response.Messages });
             }
         }
+
+        //POST ProductPage/LinkToCategory
+        [HttpPost]
+        public async Task<IActionResult> LinkToCategory([FromForm]int productId, [FromForm]int categoryId)
+        {
+            await _categoryService.LinkCategoryToProduct(categoryId, productId);
+
+            return RedirectToAction("Details", new { id = productId });
+        }
+
+        //POST ProductPage/UnlinkFromCategory
+        [HttpPost]
+        public async Task<IActionResult> UnlinkFromCategory([FromForm] int productId, [FromForm] int categoryId)
+        {
+            await _categoryService.UnlinkCategoryFromProduct(categoryId, productId);
+
+            return RedirectToAction("Details", new { id = productId });
+        }
     }
 }

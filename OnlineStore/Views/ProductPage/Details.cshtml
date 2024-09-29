@@ -26,17 +26,25 @@
             <ul>
                 @foreach(var CategoryDto in Model.ProductCategories)
                 {
-                    <li><a href="/CategoryPage/Details/@CategoryDto.CategoryId">@CategoryDto.CategoryName</a></li>
+                    <li style="margin-bottom:10px">
+                        <a href="/CategoryPage/Details/@CategoryDto.CategoryId">@CategoryDto.CategoryName</a>
+                        <form method="POST" action="/ProductPage/UnlinkFromCategory" style="display:inline">
+                            <input style="display:none" name="productId" value="@Model.Product.ProductId" />
+                            <input style="display:none" name="categoryId" value="@CategoryDto.CategoryId" />
+                            <input type="submit" value="Remove" />
+                        </form>
+                    </li>
                 }
             </ul>
-            <form method="POST" action="/ProductPage/AssociateToCategory">
-                <input style="display:none" name="ProductId" value="@Model.Product.ProductId" />
-                <select name="CategoryId">
+            <form method="POST" action="/ProductPage/LinkToCategory">
+                <input style="display:none" name="productId" value="@Model.Product.ProductId" />
+                <select name="categoryId">
                     @foreach(var CategoryDto in Model.AllCategories)
                     {
-                       <option id="@CategoryDto.CategoryId">@CategoryDto.CategoryName</option> 
+                       <option value="@CategoryDto.CategoryId">@CategoryDto.CategoryName</option> 
                     }
                 </select>
+                <input type="submit" value="Add" />
             </form>
         </div>
     </div>
