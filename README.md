@@ -1,5 +1,5 @@
 # .NET Core MVC & ViewModels
-This example utilizes our services in the previous example to organize and build webpages that facilitate content management.
+This example utilizes our services and dtos in the previous examples to organize and build webpages that facilitate content management. The Category Views are build using scaffolded code, where the Product Views are custom.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
