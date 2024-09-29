@@ -1,5 +1,5 @@
 # .NET Core MVC & ViewModels
-This example utilizes our services in the previous example to organize and build webpages that faciitate content management.
+This example utilizes our services in the previous example to organize and build webpages that facilitate content management.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
