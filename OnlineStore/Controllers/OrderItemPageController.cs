@@ -72,6 +72,45 @@ namespace OnlineStore.Controllers
             }
         }
 
+        // GET OrderItemPage/New
+        public async Task<IActionResult> New()
+        {
+
+            IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts();
+
+            IEnumerable<OrderDto?> OrderDtos = await _orderService.ListOrders();
+
+            OrderItemNew Options = new OrderItemNew() { 
+                AllOrders = OrderDtos,
+                AllProducts = ProductDtos
+            };
+
+
+
+            return View(Options);
+        }
+
+        // POST OrderItemPage/Add
+        [HttpPost]
+        public async Task<IActionResult> Add(OrderItemDto OrderItemDto)
+        {
+            ServiceResponse response = await _orderItemService.AddOrderItem(OrderItemDto);
+
+            //checking if the item was added
+            if (response.Status == ServiceResponse.ServiceStatus.Created)
+            {
+                //return RedirectToAction("Details", "OrderItemPage",new { id=response.CreatedId });
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return View("Error", new ErrorViewModel() { Errors = response.Messages });
+            }
+
+            
+
+        }
+
         /*
         // GET: OrderItemPage/Details/{id}
         [HttpGet]
@@ -90,11 +129,7 @@ namespace OnlineStore.Controllers
             }
         }
 
-        // GET OrderItemPage/New
-        public ActionResult New()
-        {
-            return View();
-        }
+        
 
 
         // POST OrderItemPage/Add

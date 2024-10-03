@@ -1,0 +1,58 @@
+﻿@model OnlineStore.Models.ViewModels.OrderItemNew
+
+@{
+    ViewData["Title"] = "New";
+}
+
+<h1>New</h1>
+
+<h4>OrderItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST" action="/OrderItemPage/Add">
+            <div class="form-group">
+                <label class="control-label">Price:</label>
+                <input name="OrderItemUnitPrice" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label class="control-label">Qty:</label>
+                <input name="OrderItemQty" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label class="control-label">Order:</label>
+                <select name="OrderId">
+                    <!-- TODO: get order options here -->
+                    @foreach (var OrderDto in Model.AllOrders)
+                    {
+                        <option value="@OrderDto.OrderId">@OrderDto.OrderId - @OrderDto.OrderDate @OrderDto.CustomerName</option>
+
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Product:</label>
+                <select name="ProductId">
+                    <!-- TODO: get product options here -->
+                    @foreach(var ProductDto in Model.AllProducts)
+                    {
+                        <option value="@ProductDto.ProductId">@ProductDto.ProductSKU @ProductDto.ProductName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -9,13 +9,15 @@ namespace OnlineStore.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
+        private readonly IOrderItemService _orderItemService;
 
         // dependency injection of service interface
-        public ProductPageController(IProductService ProductService, ICategoryService CategoryService)
+        public ProductPageController(IProductService ProductService, ICategoryService CategoryService, IOrderItemService OrderItemService)
         {
            
             _productService = ProductService;
             _categoryService = CategoryService;
+            _orderItemService = OrderItemService;
         }
 
         public IActionResult Index()
@@ -38,6 +40,9 @@ namespace OnlineStore.Controllers
             IEnumerable<CategoryDto> AssociatedCategories = await _categoryService.ListCategoriesForProduct(id);
             IEnumerable<CategoryDto> Categories = await _categoryService.ListCategories();
 
+            //need the ordered items for this product
+            IEnumerable<OrderItemDto> OrderItems = await _orderItemService.ListOrderItemsForProduct(id);
+
             if (ProductDto == null)
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find Product"] });
@@ -49,7 +54,8 @@ namespace OnlineStore.Controllers
                 {
                     Product = ProductDto,
                     ProductCategories = AssociatedCategories,
-                    AllCategories = Categories
+                    AllCategories = Categories,
+                    ProductOrderedItems = OrderItems
                 };
                 return View(ProductInfo);
             }
@@ -136,11 +142,12 @@ namespace OnlineStore.Controllers
             }
             else
             {
-                return View("Error", new ErrorViewModel() { Errors = response.Messages });
+                return RedirectToAction("Error", new ErrorViewModel() { Errors = response.Messages });
             }
         }
 
         //POST ProductPage/LinkToCategory
+        //DATA: categoryId={categoryId}&productId={productId}
         [HttpPost]
         public async Task<IActionResult> LinkToCategory([FromForm]int productId, [FromForm]int categoryId)
         {
@@ -150,6 +157,7 @@ namespace OnlineStore.Controllers
         }
 
         //POST ProductPage/UnlinkFromCategory
+        //DATA: categoryId={categoryId}&productId={productId}
         [HttpPost]
         public async Task<IActionResult> UnlinkFromCategory([FromForm] int productId, [FromForm] int categoryId)
         {
