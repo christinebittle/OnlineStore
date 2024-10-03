@@ -22,25 +22,38 @@
                 <input name="OrderItemQty" value="@Model.OrderItem.OrderItemQty" />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.OrderItem.OrderId" class="control-label"></label>
+                <label for="OrderId" class="control-label"></label>
                 <select name="OrderId">
+                
                 @foreach(OrderDto orderDto in Model.OrderOptions)
                 {
-                        string preselect = "";
-                        if (orderDto.OrderId == Model.OrderItem.OrderId) preselect = "selected";
-                        <option value="@orderDto.OrderId" {@preselect}>#@orderDto.OrderId @orderDto.CustomerName @orderDto.OrderDate </option>
+                        
+                        if (orderDto.OrderId == Model.OrderItem.OrderId)
+                        {
+                            <option value="@orderDto.OrderId" selected="selected">#@orderDto.OrderId @orderDto.CustomerName @orderDto.OrderDate </option>
 
+                        }else{
+                            <option value="@orderDto.OrderId">#@orderDto.OrderId @orderDto.CustomerName @orderDto.OrderDate </option>
+                        }
+                        
                 }
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.OrderItem.ProductId" class="control-label"></label>
+                <label for="ProductId" class="control-label"></label>
                 <select name="ProductId">
+                    
                     @foreach (ProductDto ProductDto in Model.ProductOptions)
                     {
-                        string preselect = "";
-                        if (ProductDto.ProductId == Model.OrderItem.ProductId) preselect = "selected";
-                        <option value="@ProductDto.ProductId" {@preselect}>#@ProductDto.ProductId @ProductDto.ProductSKU</option>
+
+                        if (ProductDto.ProductId == Model.OrderItem.ProductId)
+                        {
+                            <option value="@ProductDto.ProductId" selected="selected">#@ProductDto.ProductId @ProductDto.ProductSKU</option>
+                        }
+                        else{
+
+                            <option value="@ProductDto.ProductId">#@ProductDto.ProductId @ProductDto.ProductSKU</option>
+                        }
 
                     }
                 </select>
