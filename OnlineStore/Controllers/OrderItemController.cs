@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CoreEntityFramework;
 using OnlineStore.Interfaces;
 using OnlineStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEntityFramework.Controllers
 {

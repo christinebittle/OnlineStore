@@ -2,6 +2,7 @@
 using OnlineStore.Interfaces;
 using OnlineStore.Models;
 using OnlineStore.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineStore.Controllers
 {
@@ -54,6 +55,7 @@ namespace OnlineStore.Controllers
         }
 
         // GET CategoryPage/New
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -62,6 +64,7 @@ namespace OnlineStore.Controllers
 
         // POST CategoryPage/Add
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(CategoryDto CategoryDto)
         {
             ServiceResponse response = await _categoryService.AddCategory(CategoryDto);
@@ -78,6 +81,7 @@ namespace OnlineStore.Controllers
 
         //GET CategoryPage/Edit/{id}
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             CategoryDto? CategoryDto = await _categoryService.FindCategory(id);
@@ -93,6 +97,7 @@ namespace OnlineStore.Controllers
 
         //POST CategoryPage/Update/{id}
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Update(int id, CategoryDto CategoryDto)
         {
             ServiceResponse response = await _categoryService.UpdateCategory(CategoryDto);
@@ -109,6 +114,7 @@ namespace OnlineStore.Controllers
 
         //GET CategoryPage/ConfirmDelete/{id}
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             CategoryDto? CategoryDto = await _categoryService.FindCategory(id);
@@ -124,6 +130,7 @@ namespace OnlineStore.Controllers
 
         //POST CategoryPage/Delete/{id}
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _categoryService.DeleteCategory(id);

@@ -1,9 +1,7 @@
 ﻿using OnlineStore.Interfaces;
 using OnlineStore.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Interfaces;
-using OnlineStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEntityFramework.Controllers
 {
@@ -75,6 +73,8 @@ namespace CoreEntityFramework.Controllers
         /// <param name="id">The ID of the category to update</param>
         /// <param name="CategoryDto">The required information to update the category (CategoryName, CategoryColor)</param>
         /// <returns>
+        /// 302 Redirect (/Identity/Account/Login)
+        /// or
         /// 400 Bad Request
         /// or
         /// 404 Not Found
@@ -83,7 +83,7 @@ namespace CoreEntityFramework.Controllers
         /// </returns>
         /// <example>
         /// PUT: api/Category/Update/5
-        /// Request Headers: Content-Type: application/json
+        /// Request Headers: Content-Type: application/json, cookie: .AspNetCore.Identity.Application={token}
         /// Request Body: {CategoryDto}
         /// ->
         /// Response Code: 204 No Content
@@ -123,17 +123,20 @@ namespace CoreEntityFramework.Controllers
         /// Location: api/Category/Find/{CategoryId}
         /// {CategoryDto}
         /// or
+        /// 302 Redirect (/Identity/Account/Login)
+        /// or
         /// 404 Not Found
         /// </returns>
         /// <example>
         /// POST: api/Category/Add
-        /// Request Headers: Content-Type: application/json
+        /// Request Headers: Content-Type: application/json, cookie: .AspNetCore.Identity.Application={token}
         /// Request Body: {CategoryDto}
         /// ->
         /// Response Code: 201 Created
         /// Response Headers: Location: api/Category/Find/{CategoryId}
         /// </example>
         [HttpPost(template: "Add")]
+        [Authorize]
         public async Task<ActionResult<Category>> AddCategory(CategoryDto CategoryDto)
         {
             ServiceResponse response = await _categoryService.AddCategory(CategoryDto);
@@ -147,6 +150,8 @@ namespace CoreEntityFramework.Controllers
                 return StatusCode(500, response.Messages);
             }
 
+            CategoryDto.CategoryId = response.CreatedId;
+
             // returns 201 Created with Location
             return Created($"api/Category/FindCategory/{response.CreatedId}", CategoryDto);
         }
@@ -158,14 +163,18 @@ namespace CoreEntityFramework.Controllers
         /// <returns>
         /// 204 No Content
         /// or
+        /// 302 Redirect (/Identity/Account/Login)
+        /// or
         /// 404 Not Found
         /// </returns>
         /// <example>
         /// DELETE: api/Category/Delete/7
+        /// Headers: cookie: .AspNetCore.Identity.Application={token}
         /// ->
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Delete/{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             ServiceResponse response = await _categoryService.DeleteCategory(id);
@@ -212,14 +221,18 @@ namespace CoreEntityFramework.Controllers
         /// <returns>
         /// 204 No Content
         /// or
+        /// 302 Redirect (/Identity/Account/Login)
+        /// or
         /// 404 Not Found
         /// </returns>
         /// <example>
         /// Delete: api/Category/Unlink?CategoryId=4&Productid=12
+        /// Headers: cookie: .AspNetCore.Identity.Application={token}
         /// ->
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Unlink")]
+        [Authorize]
         public async Task<ActionResult> Unlink(int categoryId, int productId)
         {
             ServiceResponse response = await _categoryService.UnlinkCategoryFromProduct(categoryId, productId);
@@ -245,14 +258,18 @@ namespace CoreEntityFramework.Controllers
         /// <returns>
         /// 204 No Content
         /// or
+        /// 302 Redirect (/Identity/Account/Login)
+        /// or
         /// 404 Not Found
         /// </returns>
         /// <example>
         /// Post: api/Category/Link?CategoryId=4&Productid=12
+        /// Headers: cookie: .AspNetCore.Identity.Application={token}
         /// ->
         /// Response Code: 204 No Content
         /// </example>
         [HttpPost("Link")]
+        [Authorize]
         public async Task<ActionResult> Link(int categoryId, int productId)
         {
             ServiceResponse response = await _categoryService.LinkCategoryToProduct(categoryId, productId);
