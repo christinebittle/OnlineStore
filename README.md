@@ -32,5 +32,5 @@ This example utilizes the \[Authorize\] attribute to restrict access based on au
 - Use the network tab to confirm the behaviors:
 - Confirm that the actions are blocked if unauthenticated (no cookie sent)
 - Confirm the actions are allowed if authenticated (cookie sent)
-- Restrict GET requests to /New, /DeleteConfirm, /Edit\{id\}
+- Restrict GET requests to /New, /DeleteConfirm, /Edit/\{id\}
 - Use the network taqb to confirm the restricted behaviors
