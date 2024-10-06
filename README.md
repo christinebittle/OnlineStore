@@ -1,5 +1,5 @@
 # .NET Core Authentication
-This example utilizes the \[Authorize\] attribute to protect on the API and MVC views.
+This example utilizes the \[Authorize\] attribute to restrict access based on authentication for API and MVC views.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
