@@ -13,6 +13,7 @@ This example utilizes our services and dtos in the previous examples to organize
 2. [Core API](https://github.com/christinebittle/CoreAPI)
 3. [Core Services](https://github.com/christinebittle/CoreServices)
 4. [MVC & ViewModels](https://github.com/christinebittle/OnlineStore)
+5. [Simple Authentication](https://github.com/christinebittle/OnlineStore/tree/Authentication1)
 
 ## Test Your Understanding!
 - Complete the CRUD for order items by building the Views which correspond to the OrderItemPageController methods (Find, New, Add, DeleteConfirm, Delete)
