@@ -1,12 +1,19 @@
-# .NET Core MVC & ViewModels
-This example utilizes our services and dtos in the previous examples to organize and build webpages that facilitate content management. The Category Views are build using scaffolded code, where the Product Views are custom.
+# .NET Core Authentication
+This example utilizes the \[Authorize\] attribute to protect on the API and MVC views.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
 - update-database
 - Tools > SQL Server Object Explorer > Database
 - Add Customer, Order records
-- Interact with Ordered Items, Products, Categories through webpages.
+- Interact with Ordered Items, Products, Categories through API
+- Confirm that Add, Delete, Update operations on Categories are blocked if not logged in
+- Create an account on the sample app
+- Use the network tab to monitor log in request (Look for Response Header: Set Cookie)
+- Use developer tools to see local storage / cookies
+- Observe new requests to the API after logging in
+- Notice the request headers include the same cookie, and Add, Delete, Update work
+- Try the same exercise with the MVC Category pages.
 
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
@@ -15,10 +22,14 @@ This example utilizes our services and dtos in the previous examples to organize
 4. [MVC & ViewModels](https://github.com/christinebittle/OnlineStore)
 
 ## Test Your Understanding!
-- Complete the CRUD for order items by building the Views which correspond to the OrderItemPageController methods (Find, New, Add, DeleteConfirm, Delete)
-- Define an OrderItemNew.cs ViewModel which allows users to select which Order and which Product the Order Item refers to as a list.
-- Modify the ProductDetails.cs ViewModel to include a list of ordered items for that product
-- Modify the ProductPageController.cs Details method, using OrderItemService to receive a list of ordered items for a product (ListOrderItemsForProduct)
-- Use the example as a scaffold to build an OrderPageController, which uses an OrderService to execute CRUD
-- The OrderPageController Details method can use a ViewModel and the OrderItemService to ListOrderedItemsForOrder
-- The OrderPageController Edit and New methods can use a ViewModel and the CustomerService, so the user can choose which customer the new / updated order belongs
+- Restrict the OrderItems API to use \[Authorize\] on Delete operatiohn
+- Send a requst to delete with no authentication token, confirm the record is not deleted.
+- Log in, copy the authentication cookie
+- Introduce the authentication cookie into the request Header (see CategoryController.cs documentation)
+- Confirm the request to add the order item is now allowed
+- Restrict POST requests to /Add, /Delete, /Update/\{id\} order item in OrderItemPageController.cs with \[Authorize\]
+- Use the network tab to confirm the behaviors:
+- Confirm that the actions are blocked if unauthenticated (no cookie sent)
+- Confirm the actions are allowed if authenticated (cookie sent)
+- Restrict GET requests to /New, /DeleteConfirm, /Edit\{id\}
+- Use the network taqb to confirm the restricted behaviors
