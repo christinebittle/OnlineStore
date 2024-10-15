@@ -1,5 +1,5 @@
 # .NET Core Authentication
-This example utilizes the \[Authorize\] attribute to restrict access based on authentication for API and MVC views.
+This example has an image uploading feature for Products
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
@@ -21,16 +21,14 @@ This example utilizes the \[Authorize\] attribute to restrict access based on au
 3. [Core Services](https://github.com/christinebittle/CoreServices)
 4. [MVC & ViewModels](https://github.com/christinebittle/OnlineStore)
 5. [Simple Authentication](https://github.com/christinebittle/OnlineStore/tree/Authentication1)
+6. [Image/File Upload](https://github.com/christinebittle/OnlineStore/tree/product-image-upload)
 
 ## Test Your Understanding!
-- Restrict the OrderItems API to use \[Authorize\] on Delete operatiohn
-- Send a requst to delete with no authentication token, confirm the record is not deleted.
-- Log in, copy the authentication cookie
-- Introduce the authentication cookie into the request Header (see CategoryController.cs documentation)
-- Confirm the request to add the order item is now allowed
-- Restrict POST requests to /Add, /Delete, /Update/\{id\} order item in OrderItemPageController.cs with \[Authorize\]
-- Use the network tab to confirm the behaviors:
-- Confirm that the actions are blocked if unauthenticated (no cookie sent)
-- Confirm the actions are allowed if authenticated (cookie sent)
-- Restrict GET requests to /New, /DeleteConfirm/\{id\}, /Edit/\{id\}
-- Use the network tab to confirm the restricted behaviors
+- Create a Product Record
+- Upload an image for the Product record through api/Product/UploadProductPic/{id}
+- Confirm the existence of the image in the project through project files
+- Upload new image for same product
+- Look for database columns for product with picture, without picture
+- Modify ProductDto on ListProducts, ShowProduct
+- Use Views to show product information on /ProductPage/List, /ProductPage/Show/{id}
+- Modify Product/Edit to have a form with enctype="multi-part/form-data", receive IFormFile and forward to UploadProductPicService
