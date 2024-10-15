@@ -17,6 +17,8 @@ namespace OnlineStore.Interfaces
 
         Task<ServiceResponse> DeleteProduct(int id);
 
+        Task<ServiceResponse> UpdateProductImage(int id, IFormFile ProductPic);
+
         // related methods
 
         Task<IEnumerable<ProductDto>> ListProductsForCategory(int id);

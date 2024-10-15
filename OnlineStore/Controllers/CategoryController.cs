@@ -89,6 +89,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPut(template: "Update/{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateCategory(int id, CategoryDto CategoryDto)
         {
             // {id} in URL must match CategoryId in POST Body

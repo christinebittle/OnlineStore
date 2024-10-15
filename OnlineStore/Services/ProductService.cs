@@ -3,6 +3,8 @@ using OnlineStore.Models;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Models;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace CoreEntityFramework.Services
 {
@@ -81,6 +83,9 @@ namespace CoreEntityFramework.Services
             };
             // flags that the object has changed
             _context.Entry(Product).State = EntityState.Modified;
+            // handled by another method
+            _context.Entry(Product).Property(p => p.HasPic).IsModified = false;
+            _context.Entry(Product).Property(p => p.PicExtension).IsModified = false;
 
             try
             {
@@ -189,6 +194,91 @@ namespace CoreEntityFramework.Services
             // return ProductDtos
             return ProductDtos;
 
+        }
+
+
+
+        public async Task<ServiceResponse> UpdateProductImage(int id, IFormFile ProductPic)
+        {
+            ServiceResponse response = new();
+
+            Product? Product = await _context.Products.FindAsync(id);
+            if (Product==null)
+            {
+                response.Status = ServiceResponse.ServiceStatus.NotFound;
+                response.Messages.Add($"Product {id} not found");
+                return response;
+            }
+
+            if (ProductPic.Length > 0)
+            {
+               
+
+                // remove old picture if exists
+                if (Product.HasPic)
+                {
+                    string OldFileName = $"{Product.ProductId}{Product.PicExtension}";
+                    string OldFilePath = Path.Combine("wwwroot/images/products/", OldFileName);
+                    if (File.Exists(OldFilePath))
+                    {
+                        System.IO.File.Delete(OldFilePath);
+                    }
+                   
+                }
+
+
+                //establish valid file types (can be changed to other file extensions if desired!)
+                List<string> Extensions = new List<String>{ ".jpeg", ".jpg", ".png", ".gif" };
+                string ProductPicExtension = Path.GetExtension(ProductPic.FileName).ToLowerInvariant();
+                if (!Extensions.Contains(ProductPicExtension))
+                {
+                    response.Messages.Add($"{ProductPicExtension} is not a valid file extension");
+                    response.Status = ServiceResponse.ServiceStatus.Error;
+                    return response;
+                }
+
+                string FileName = $"{id}{ProductPicExtension}";
+                string FilePath = Path.Combine("wwwroot/images/products/", FileName);
+
+                using (var targetStream = System.IO.File.Create(FilePath))
+                {
+                    ProductPic.CopyTo(targetStream);
+                }
+
+                // check if file was uploaded
+                if (File.Exists(FilePath)) { 
+                    Product.PicExtension = ProductPicExtension;
+                    Product.HasPic = true;
+
+                    _context.Entry(Product).State = EntityState.Modified;
+
+                    try
+                    {
+                        // SQL Equivalent: Update Products set ... where ProductId={id}
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        response.Status = ServiceResponse.ServiceStatus.Error;
+                        response.Messages.Add("An error occurred updating the record");
+
+                        return response;
+                    }
+                }
+
+            }
+            else
+            {
+                response.Messages.Add("No File Content");
+                response.Status = ServiceResponse.ServiceStatus.Error;
+                return response;
+            }
+
+            response.Status = ServiceResponse.ServiceStatus.Updated;
+           
+
+
+            return response;
         }
 
 

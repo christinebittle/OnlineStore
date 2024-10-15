@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineStore;
 using OnlineStore.Models;
 using OnlineStore.Interfaces;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEntityFramework.Controllers
 {
@@ -200,12 +202,56 @@ namespace CoreEntityFramework.Controllers
         /// GET: api/Product/ListForCategory/3 -> [{ProductDto},{ProductDto},..]
         /// </example>
         [HttpGet(template: "ListForCategory/{id}")]
-        public async Task<IActionResult> ListProductsForCategory(int id)
+        public async Task<ActionResult> ListProductsForCategory(int id)
         {
             // empty list of data transfer object ProductDto
             IEnumerable<ProductDto> ProductDtos = await _productService.ListProductsForCategory(id);
             // return 200 OK with CateDtos
             return Ok(ProductDtos);
+        }
+
+
+        /// <summary>
+        /// Receives a product picture and saves it to /wwwroot/images/products/{id}{extension}
+        /// </summary>
+        /// <param name="id">The product to update an image for</param>
+        /// <param name="ProductPic">The picture to change to</param>
+        /// <returns>
+        /// 200 OK
+        /// or
+        /// 404 NOT FOUND
+        /// or 
+        /// 500 BAD REQUEST
+        /// </returns>
+        /// <example>
+        /// PUT : api/Product/UploadProductPic/2
+        /// HEADERS: Content-Type: Multi-part/form-data, Cookie: .AspNetCore.Identity.Application={token}
+        /// FORM DATA:
+        /// ------boundary
+        /// Content-Disposition: form-data; name="ProductPic"; filename="myproductpic.jpg"
+        /// Content-Type: image/jpeg
+        /// </example>
+        /// <example>
+        /// curl "https://localhost:xx/api/Product/UploadProductPic/1" -H "Cookie: .AspNetCore.Identity.Application={token}" -X "PUT" -F ProductPic=@myproductpic.jpg
+        /// </example>
+        [HttpPut(template: "UploadProductPic/{id}")]
+        //[Authorize]
+        public async Task<IActionResult> UploadProductPic(int id, IFormFile ProductPic)
+        {
+
+            ServiceResponse response = await _productService.UpdateProductImage(id, ProductPic);
+
+            if (response.Status == ServiceResponse.ServiceStatus.NotFound)
+            {
+                return NotFound();
+            }
+            else if (response.Status == ServiceResponse.ServiceStatus.Error)
+            {
+                return StatusCode(500, response.Messages);
+            }
+
+            return Ok();
+
         }
     }
 }

@@ -13,6 +13,11 @@ namespace OnlineStore.Models
 
         public decimal ProductPrice { get; set; }
 
+        public bool HasPic { get; set; } = false;
+        
+        // images stored in /wwwroot/images/products/{ProductId}.{PicExtension}
+        public string? PicExtension { get; set; }
+
         //A product can have many categories
         public ICollection<Category>? Categories { get; set; }
 
