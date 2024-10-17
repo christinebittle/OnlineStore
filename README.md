@@ -1,4 +1,4 @@
-# .NET Core Authentication
+# .NET Core Image Upload Feature
 This example has an image uploading feature for Products
 
 ## To run this project
