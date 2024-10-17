@@ -11,6 +11,11 @@
             <div>@Model.Product.ProductName</div>
         </div>
         <div>
+            @if(Model.Product.HasProductPic){
+                <img style="width:150px; height:auto;" src="@Model.Product.ProductImagePath"/>
+            }
+        </div>
+        <div>
             <label>SKU</label>
             <div>@Model.Product.ProductSKU</div>
         </div>

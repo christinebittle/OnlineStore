@@ -28,15 +28,26 @@ namespace CoreEntityFramework.Services
             // foreach Order Item record in database
             foreach (Product Product in Products)
             {
-                // create new instance of ProductDto, add to list
-                ProductDtos.Add(new ProductDto()
+                ProductDto ProductDto = new ProductDto()
                 {
                     ProductId = Product.ProductId,
                     ProductName = Product.ProductName,
                     ProductSKU = Product.ProductSKU,
-                    ProductPrice = Product.ProductPrice
-                });
+                    ProductPrice = Product.ProductPrice,
+                    HasProductPic = Product.HasPic
+                };
+                
+
+                if (Product.HasPic)
+                {
+                    ProductDto.ProductImagePath = $"/images/products/{Product.ProductId}{Product.PicExtension}";
+                }
+
+                // create new instance of ProductDto, add to list
+                ProductDtos.Add(ProductDto);
             }
+
+            
             // return ProductDtos
             return ProductDtos;
 
@@ -61,8 +72,14 @@ namespace CoreEntityFramework.Services
                 ProductId = Product.ProductId,
                 ProductName = Product.ProductName,
                 ProductSKU = Product.ProductSKU,
-                ProductPrice = Product.ProductPrice
+                ProductPrice = Product.ProductPrice,
+                HasProductPic = Product.HasPic
             };
+            if (Product.HasPic)
+            {
+                ProductDto.ProductImagePath = $"/images/products/{Product.ProductId}{Product.PicExtension}";
+            }
+
             return ProductDto;
 
         }
@@ -72,15 +89,21 @@ namespace CoreEntityFramework.Services
         {
             ServiceResponse serviceResponse = new();
 
+            Product? Product = await _context.Products.FindAsync(ProductDto.ProductId);
+
+            if (Product==null)
+            {
+                serviceResponse.Messages.Add("Product could not be found");
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
+                return serviceResponse;
+            }
+
+            Product.ProductName = ProductDto.ProductName;
+            Product.ProductPrice = ProductDto.ProductPrice;
+            Product.ProductSKU = ProductDto.ProductSKU;
 
             // Create instance of Product
-            Product Product = new Product()
-            {
-                ProductId = ProductDto.ProductId,
-                ProductName = ProductDto.ProductName,
-                ProductSKU = ProductDto.ProductSKU,
-                ProductPrice = ProductDto.ProductPrice
-            };
+            
             // flags that the object has changed
             _context.Entry(Product).State = EntityState.Modified;
             // handled by another method
@@ -90,7 +113,11 @@ namespace CoreEntityFramework.Services
             try
             {
                 // SQL Equivalent: Update Products set ... where ProductId={id}
+                //_context.Products.Update(Product);
+                //_context.SaveChanges();
                 await _context.SaveChangesAsync();
+
+                
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -221,13 +248,13 @@ namespace CoreEntityFramework.Services
                     string OldFilePath = Path.Combine("wwwroot/images/products/", OldFileName);
                     if (File.Exists(OldFilePath))
                     {
-                        System.IO.File.Delete(OldFilePath);
+                        File.Delete(OldFilePath);
                     }
                    
                 }
 
 
-                //establish valid file types (can be changed to other file extensions if desired!)
+                // establish valid file types (can be changed to other file extensions if desired!)
                 List<string> Extensions = new List<String>{ ".jpeg", ".jpg", ".png", ".gif" };
                 string ProductPicExtension = Path.GetExtension(ProductPic.FileName).ToLowerInvariant();
                 if (!Extensions.Contains(ProductPicExtension))
@@ -240,7 +267,7 @@ namespace CoreEntityFramework.Services
                 string FileName = $"{id}{ProductPicExtension}";
                 string FilePath = Path.Combine("wwwroot/images/products/", FileName);
 
-                using (var targetStream = System.IO.File.Create(FilePath))
+                using (var targetStream = File.Create(FilePath))
                 {
                     ProductPic.CopyTo(targetStream);
                 }
@@ -254,7 +281,8 @@ namespace CoreEntityFramework.Services
 
                     try
                     {
-                        // SQL Equivalent: Update Products set ... where ProductId={id}
+                        // SQL Equivalent: Update Products set HasPic=True, PicExtension={ext} where ProductId={id}
+
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)

@@ -101,8 +101,14 @@ namespace OnlineStore.Controllers
 
         //POST ProductPage/Update/{id}
         [HttpPost]
-        public async Task<IActionResult> Update(int id, ProductDto ProductDto)
+        public async Task<IActionResult> Update(int id, ProductDto ProductDto, IFormFile ProductPic)
         {
+            //Confirm receipt of product image
+            System.Diagnostics.Debug.WriteLine("Product Image "+ProductPic.Length);
+
+            ServiceResponse imageresponse = await _productService.UpdateProductImage(id, ProductPic);
+            // todo: error handling on imageresponse
+
             ServiceResponse response = await _productService.UpdateProduct(ProductDto);
 
             if (response.Status == ServiceResponse.ServiceStatus.Updated)
@@ -113,6 +119,8 @@ namespace OnlineStore.Controllers
             {
                 return View("Error", new ErrorViewModel() { Errors = response.Messages });
             }
+
+
         }
 
         //GET ProductPage/ConfirmDelete/{id}

@@ -5,7 +5,16 @@
 @foreach(var Product in Model)
 {
     <div>
-        <a href="/ProductPage/Details/@Product.ProductId">@Product.ProductName $@Product.ProductPrice</a>
+        <a href="/ProductPage/Details/@Product.ProductId">
+        @if (Product.HasProductPic)
+        {
+                <img style="width:150px; height:auto;" src="@Product.ProductImagePath" />
+        }
+        
+        <span>@Product.ProductName $@Product.ProductPrice</span>
+        
+        </a>
+        
     </div>
 }
 </div>
