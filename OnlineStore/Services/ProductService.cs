@@ -255,7 +255,7 @@ namespace CoreEntityFramework.Services
 
 
                 // establish valid file types (can be changed to other file extensions if desired!)
-                List<string> Extensions = new List<String>{ ".jpeg", ".jpg", ".png", ".gif" };
+                List<string> Extensions = new List<string>{ ".jpeg", ".jpg", ".png", ".gif" };
                 string ProductPicExtension = Path.GetExtension(ProductPic.FileName).ToLowerInvariant();
                 if (!Extensions.Contains(ProductPicExtension))
                 {
