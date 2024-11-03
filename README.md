@@ -22,6 +22,7 @@ This example utilizes the \[Authorize\] attribute to restrict access based on au
 4. [MVC & ViewModels](https://github.com/christinebittle/OnlineStore)
 5. [Simple Authentication](https://github.com/christinebittle/OnlineStore/tree/Authentication1)
 6. [Image/File Upload](https://github.com/christinebittle/OnlineStore/tree/product-image-upload)
+7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 
 ## Test Your Understanding!
 - Restrict the OrderItems API to use \[Authorize\] on Delete operatiohn
