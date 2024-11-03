@@ -1,4 +1,7 @@
-﻿namespace OnlineStore.Models
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+
+namespace OnlineStore.Models
 {
     public class Order
     {
@@ -16,8 +19,8 @@
 
 
         //Each order belongs to one customer
-        public virtual Customer Customer { get; set; }
-        public int CustomerId { get; set; }
+        
+        public IdentityUser Customer { get; set; }
 
         //An order can have many items
         public ICollection<OrderItem>? OrderItems { get; set; }

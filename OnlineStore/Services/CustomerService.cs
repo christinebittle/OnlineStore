@@ -2,7 +2,8 @@
 using OnlineStore.Models;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
-using OnlineStore.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEntityFramework.Services
 {
@@ -10,38 +11,71 @@ namespace CoreEntityFramework.Services
     {
 
         private readonly AppDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        // dependency injection of database context
-        public CustomerService(AppDbContext context)
+        // dependency injection of database context, user manager
+        public CustomerService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // implementations of customer create, read, update, delete go here
 
-        public IEnumerable<CustomerDto> ListCustomers()
+        
+        public async Task<IEnumerable<CustomerDto>> ListCustomers()
         {
-            CustomerDto Customer1 = new CustomerDto()
+            // user manager over database context
+            IEnumerable<IdentityUser> Users = await _userManager.GetUsersInRoleAsync("Customer");
+
+            List<CustomerDto> CustomerDtos = new List<CustomerDto>();
+            foreach (IdentityUser User in Users)
             {
-                CustomerId = 100,
-                CustomerName = "Sam",
-                CustomerEmail = "sam@test.ca"
-            };
-
-            CustomerDto Customer2 = new CustomerDto()
-            {
-                CustomerId = 101,
-                CustomerName = "Alex",
-                CustomerEmail = "Alex@test.ca"
-            };
-
-            List<CustomerDto> Customers = new List<CustomerDto>();
-
-            Customers.Add(Customer1);
-            Customers.Add(Customer2);
-
-            return Customers;
-
+                CustomerDtos.Add(new CustomerDto()
+                {
+                    CustomerId = User.Id,
+                    CustomerName = User.UserName,
+                    CustomerEmail = User.Email
+                });
+            }
+            return CustomerDtos;
         }
+
+        public async Task<CustomerDto?> FindCustomer(string id)
+        {
+            IdentityUser? User = await _userManager.FindByIdAsync(id);
+
+            if (User == null) return null;
+
+            CustomerDto CustomerDto = new CustomerDto()
+            {
+                CustomerId = User.Id,
+                CustomerName = User.UserName,
+                CustomerEmail = User.Email
+            };
+
+            return CustomerDto;
+        }
+
+
+        public async Task<CustomerDto?> Profile()
+        {
+
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+            
+
+            CustomerDto CustomerDto = new CustomerDto()
+            {
+                CustomerId = User.Id,
+                CustomerName = User.UserName,
+                CustomerEmail = User.Email
+            };
+
+            return CustomerDto;
+        }
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using OnlineStore.Interfaces;
 using OnlineStore.Models;
 using OnlineStore.Data;
-using OnlineStore.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreEntityFramework.Services
@@ -33,7 +32,7 @@ namespace CoreEntityFramework.Services
                 {
                     OrderId = Order.OrderId,
                     OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
-                    CustomerName = Order.Customer.CustomerName
+                    CustomerName = Order.Customer.UserName
                 });
             }
             // return CategoryDtos

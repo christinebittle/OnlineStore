@@ -7,16 +7,20 @@ namespace OnlineStore.Interfaces
         // definitions for implementations of actions to create, read, update, delete
 
         // base CRUD
-        IEnumerable<CustomerDto> ListCustomers();
+        Task<IEnumerable<CustomerDto>> ListCustomers();
 
-        //Task<CustomerDto?> FindCustomer(int id);
+        Task<CustomerDto?> FindCustomer(string id);
 
-        //Task<ServiceResponse> UpdateCustomer(CustomerDto CustomerDto);
+        Task<CustomerDto?> Profile();
 
-        //Task<ServiceResponse> AddCustomer(CustomerDto CustomerDto);
+        // Most CRUD is executed by the user on their account
 
-        //Task<ServiceResponse> DeleteCustomer(int id);
+        // Administrator CRUD on customers (users)
 
+        // DeleteUser
+        
         // related methods
+
+        
     }
 }

@@ -41,7 +41,7 @@ namespace OnlineStore.Services
                     ProductSKU = orderItem.Product.ProductSKU,
                     OrderId = orderItem.OrderId,
                     OrderDate = orderItem.Order.OrderDate.ToString("yyyy-MM-dd"),
-                    CustomerName = orderItem.Order.Customer.CustomerName
+                    CustomerName = orderItem.Order.Customer.UserName
                 });
             }
             // return OrderItemDtos
@@ -76,7 +76,7 @@ namespace OnlineStore.Services
                 ProductSKU = orderItem.Product.ProductSKU,
                 OrderId = orderItem.OrderId,
                 OrderDate = orderItem.Order.OrderDate.ToString("yyyy-MM-dd"),
-                CustomerName = orderItem.Order.Customer.CustomerName
+                CustomerName = orderItem.Order.Customer.UserName
             };
             return orderItemDto;
 
@@ -237,7 +237,7 @@ namespace OnlineStore.Services
                     ProductSKU = orderItem.Product.ProductSKU,
                     OrderId = orderItem.OrderId,
                     OrderDate = orderItem.Order.OrderDate.ToString("yyyy-MM-dd"),
-                    CustomerName = orderItem.Order.Customer.CustomerName
+                    CustomerName = orderItem.Order.Customer.UserName
                 });
             }
             // return 200 OK with OrderItemDtos
@@ -271,7 +271,7 @@ namespace OnlineStore.Services
                     ProductSKU = orderItem.Product.ProductSKU,
                     OrderId = orderItem.OrderId,
                     OrderDate = orderItem.Order.OrderDate.ToString("yyyy-MM-dd"),
-                    CustomerName = orderItem.Order.Customer.CustomerName
+                    CustomerName = orderItem.Order.Customer.UserName
                 });
             }
             // return 200 OK with OrderItemDtos
