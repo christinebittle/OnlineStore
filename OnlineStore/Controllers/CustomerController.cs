@@ -43,7 +43,7 @@ namespace CoreEntityFramework.Controllers
 
 
         /// <summary>
-        /// Gets a list of customers in the system. Administrators can access any customer.
+        /// Finds a customer in the system. Administrators can access any customer.
         /// </summary>
         /// <returns>
         /// CustomerDto

@@ -36,6 +36,7 @@ namespace CoreEntityFramework.Controllers
         /// GET: api/OrderItems/List -> [{OrderItemDto},{OrderItemDto},..]
         /// </example>
         [HttpGet(template: "List")]
+        [Authorize(Roles="admin")]
         public async Task<ActionResult<IEnumerable<OrderItemDto>>> ListOrderItems()
         {
             // returns a list of order item dtos
