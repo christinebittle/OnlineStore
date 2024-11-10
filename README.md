@@ -23,4 +23,5 @@ This example continues with conditional access to Orders
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 
 ## Test Your Understanding!
-- Create an Admin Page "All Orders" which only administrators can see
+- Modify "Show Product" page so that only Admins can access the order items for a product
+
