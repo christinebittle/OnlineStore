@@ -16,6 +16,7 @@ This example utilizes our services and dtos in the previous examples to organize
 5. [Simple Authentication](https://github.com/christinebittle/OnlineStore/tree/Authentication1)
 6. [Image/File Upload](https://github.com/christinebittle/OnlineStore/tree/product-image-upload)
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
+8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 
 ## Test Your Understanding!
 - Complete the CRUD for order items by building the Views which correspond to the OrderItemPageController methods (Find, New, Add, DeleteConfirm, Delete)
