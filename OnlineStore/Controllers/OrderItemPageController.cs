@@ -3,6 +3,7 @@ using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models;
 using OnlineStore.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineStore.Controllers
 {
@@ -20,12 +21,15 @@ namespace OnlineStore.Controllers
             _orderService = OrderService;
         }
 
+        // GET: OrderItemPage
+        [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction("List");
         }
 
         // GET: OrderItemPage/List
+        [HttpGet]
         public async Task<IActionResult> List()
         {
             IEnumerable<OrderItemDto?> OrderItemDtos = await _orderItemService.ListOrderItems();
@@ -34,6 +38,7 @@ namespace OnlineStore.Controllers
 
         //GET OrderItemPage/Edit/{id}
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             OrderItemDto? OrderItemDto = await _orderItemService.FindOrderItem(id);
@@ -58,6 +63,7 @@ namespace OnlineStore.Controllers
 
         //POST OrderItemPage/Update/{id}
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(int id, OrderItemDto OrderItemDto)
         {
             ServiceResponse response = await _orderItemService.UpdateOrderItem(OrderItemDto);
@@ -73,6 +79,7 @@ namespace OnlineStore.Controllers
         }
 
         // GET OrderItemPage/New
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> New()
         {
 
@@ -92,6 +99,7 @@ namespace OnlineStore.Controllers
 
         // POST OrderItemPage/Add
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Add(OrderItemDto OrderItemDto)
         {
             ServiceResponse response = await _orderItemService.AddOrderItem(OrderItemDto);
@@ -111,79 +119,6 @@ namespace OnlineStore.Controllers
 
         }
 
-        /*
-        // GET: OrderItemPage/Details/{id}
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            OrderItemDto? OrderItemDto = await _orderItemService.FindOrderItem(id);
-           
-
-            if (OrderItemDto == null)
-            {
-                return View("Error", new ErrorViewModel() { Errors = ["Could not find OrderItem"] });
-            }
-            else
-            {
-                return View(OrderItemDto);
-            }
-        }
-
         
-
-
-        // POST OrderItemPage/Add
-        [HttpPost]
-        public async Task<IActionResult> Add(OrderItemDto OrderItemDto)
-        {
-            ServiceResponse response = await _orderItemService.AddOrderItem(OrderItemDto);
-
-            if (response.Status == ServiceResponse.ServiceStatus.Created)
-            {
-                return RedirectToAction("Details", "OrderItemPage", new { id = response.CreatedId });
-            }
-            else
-            {
-                return View("Error", new ErrorViewModel() { Errors = response.Messages });
-            }
-        }
-
-        
-
-        
-
-        //GET OrderItemPage/ConfirmDelete/{id}
-        [HttpGet]
-        public async Task<IActionResult> ConfirmDelete(int id)
-        {
-            OrderItemDto? OrderItemDto = await _orderItemService.FindOrderItem(id);
-            if (OrderItemDto == null)
-            {
-                return View("Error");
-            }
-            else
-            {
-                return View(OrderItemDto);
-            }
-        }
-
-        //POST OrderItemPage/Delete/{id}
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            ServiceResponse response = await _orderItemService.DeleteOrderItem(id);
-
-            if (response.Status == ServiceResponse.ServiceStatus.Deleted)
-            {
-                return RedirectToAction("List", "OrderItemPage");
-            }
-            else
-            {
-                return View("Error", new ErrorViewModel() { Errors = response.Messages });
-            }
-        }
-
-
-        */
     }
 }

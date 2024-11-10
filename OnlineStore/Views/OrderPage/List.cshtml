@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<OnlineStore.Models.OrderDto>
 
+<h2>All Orders</h2>
 @foreach (OnlineStore.Models.OrderDto orderDto in Model)
 {
     <div>
-        @orderDto.OrderId @orderDto.OrderDate @orderDto.CustomerName
+        <a href="/OrderPage/Show/@orderDto.OrderId">@orderDto.OrderId @orderDto.OrderDate @orderDto.CustomerName</a>
     </div>
 
 }

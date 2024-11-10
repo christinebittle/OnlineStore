@@ -89,7 +89,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPut(template: "Update/{id}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> UpdateCategory(int id, CategoryDto CategoryDto)
         {
             // {id} in URL must match CategoryId in POST Body
@@ -137,7 +137,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Headers: Location: api/Category/Find/{CategoryId}
         /// </example>
         [HttpPost(template: "Add")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Category>> AddCategory(CategoryDto CategoryDto)
         {
             ServiceResponse response = await _categoryService.AddCategory(CategoryDto);
@@ -175,7 +175,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             ServiceResponse response = await _categoryService.DeleteCategory(id);
@@ -233,7 +233,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Unlink")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Unlink(int categoryId, int productId)
         {
             ServiceResponse response = await _categoryService.UnlinkCategoryFromProduct(categoryId, productId);
@@ -270,7 +270,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPost("Link")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Link(int categoryId, int productId)
         {
             ServiceResponse response = await _categoryService.LinkCategoryToProduct(categoryId, productId);

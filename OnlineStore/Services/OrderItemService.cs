@@ -3,6 +3,8 @@ using OnlineStore.Models;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineStore.Services
 {
@@ -10,10 +12,14 @@ namespace OnlineStore.Services
     {
 
         private readonly AppDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         // dependency injection of database context
-        public OrderItemService(AppDbContext context)
+        public OrderItemService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -213,6 +219,12 @@ namespace OnlineStore.Services
 
         public async Task<IEnumerable<OrderItemDto>> ListOrderItemsForOrder(int id)
         {
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            string customerId = User.Id;
+            bool isUserAdmin = await _userManager.IsInRoleAsync(User, "admin");
+
+            
+
             // WHERE orderid == id
             List<OrderItem> orderItems = await _context.OrderItems
                 .Include(i => i.Product)
@@ -226,6 +238,11 @@ namespace OnlineStore.Services
             // foreach Order Item record in database
             foreach (OrderItem orderItem in orderItems)
             {
+
+                // conditional access to order item - admin or customer who made the order
+                if ((orderItem.Order.Customer.Id != customerId) && !isUserAdmin) continue;
+                
+
                 // create new instance of OrderItemDto, add to list
                 orderItemDtos.Add(new OrderItemDto()
                 {

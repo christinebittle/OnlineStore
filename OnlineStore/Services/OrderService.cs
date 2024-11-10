@@ -13,6 +13,7 @@ namespace CoreEntityFramework.Services
         private readonly AppDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        
 
         // dependency injection of database context
         public OrderService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
@@ -105,6 +106,40 @@ namespace CoreEntityFramework.Services
             }
             // return OrderDtos
             return OrderDtos;
+        }
+
+
+        public async Task<OrderDto> FindOrder(int orderId)
+        {
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            string customerId = User.Id;
+
+            
+
+            // all orders for a customer
+            Order Order = await _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+
+            bool isUserAdmin = await _userManager.IsInRoleAsync(User, "admin");
+
+            // conditional access to order record - admin or customer who made the order
+            if ((Order.Customer.Id != customerId) && !isUserAdmin)
+            {
+                return null;
+            }
+
+            // empty list of data transfer object OrderDto
+            return new OrderDto()
+            {
+                OrderId = Order.OrderId,
+                OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
+                CustomerName = Order.Customer.UserName,
+                CustomerId = Order.Customer.Id,
+                NumItems = Order.OrderItems.Count()
+            };
+            
         }
 
     }

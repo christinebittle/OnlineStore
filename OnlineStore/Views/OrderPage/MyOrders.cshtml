@@ -1,0 +1,10 @@
+﻿@model IEnumerable<OnlineStore.Models.OrderDto>
+
+<h2>My Orders</h2>
+@foreach (OnlineStore.Models.OrderDto orderDto in Model)
+{
+    <div>
+        <a href="/OrderPage/Show/@orderDto.OrderId">@orderDto.OrderId @orderDto.OrderDate</a>
+    </div>
+
+}

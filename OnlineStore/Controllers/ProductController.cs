@@ -95,6 +95,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPut(template: "Update/{id}")]
+        [Authorize(Roles="admin")]
         public async Task<ActionResult> UpdateProduct(int id, ProductDto ProductDto)
         {
             // {id} in URL must match ProductId in POST Body
@@ -140,6 +141,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Headers: Location: api/Product/Find/{ProductId}
         /// </example>
         [HttpPost(template: "Add")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Product>> AddProduct(ProductDto ProductDto)
         {
             ServiceResponse response = await _productService.AddProduct(ProductDto);
@@ -172,6 +174,7 @@ namespace CoreEntityFramework.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Delete/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             ServiceResponse response = await _productService.DeleteProduct(id);
@@ -235,7 +238,7 @@ namespace CoreEntityFramework.Controllers
         /// curl "https://localhost:xx/api/Product/UploadProductPic/1" -H "Cookie: .AspNetCore.Identity.Application={token}" -X "PUT" -F ProductPic=@myproductpic.jpg
         /// </example>
         [HttpPut(template: "UploadProductPic/{id}")]
-        //[Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UploadProductPic(int id, IFormFile ProductPic)
         {
 

@@ -1,0 +1,22 @@
+﻿@model OnlineStore.Models.ViewModels.OrderDetails
+
+<h1>Order #@Model.Order.OrderId</h1>
+<p>placed on @Model.Order.OrderDate</p>
+
+<div>
+    <table>
+        <tr>
+            <th>SKU</th>
+            <th>Qty</th>
+            <th>Price</th>
+        </tr>
+    @foreach(OnlineStore.Models.OrderItemDto itemDto in Model.Items)
+    {
+        <tr>
+            <td>@itemDto.ProductSKU</td>
+            <td>@itemDto.OrderItemQty</td>
+            <td>@itemDto.OrderItemUnitPrice</td>
+        </tr>
+    }
+    </table>
+</div>

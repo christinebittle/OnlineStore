@@ -2,6 +2,7 @@
 using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineStore.Controllers
 {
@@ -26,6 +27,7 @@ namespace OnlineStore.Controllers
         }
 
         // GET: ProductPage/List
+        [HttpGet]
         public async Task<IActionResult> List()
         {
             IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts();
@@ -62,6 +64,7 @@ namespace OnlineStore.Controllers
         }
 
         // GET ProductPage/New
+        [Authorize(Roles = "admin")]
         public ActionResult New()
         {
             return View();
@@ -70,6 +73,7 @@ namespace OnlineStore.Controllers
 
         // POST ProductPage/Add
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Add(ProductDto ProductDto)
         {
             ServiceResponse response = await _productService.AddProduct(ProductDto);
@@ -86,6 +90,7 @@ namespace OnlineStore.Controllers
 
         //GET ProductPage/Edit/{id}
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             ProductDto? ProductDto = await _productService.FindProduct(id);
@@ -101,6 +106,7 @@ namespace OnlineStore.Controllers
 
         //POST ProductPage/Update/{id}
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(int id, ProductDto ProductDto)
         {
             ServiceResponse response = await _productService.UpdateProduct(ProductDto);
@@ -117,6 +123,7 @@ namespace OnlineStore.Controllers
 
         //GET ProductPage/ConfirmDelete/{id}
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             ProductDto? ProductDto = await _productService.FindProduct(id);
@@ -132,6 +139,7 @@ namespace OnlineStore.Controllers
 
         //POST ProductPage/Delete/{id}
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _productService.DeleteProduct(id);
@@ -149,6 +157,7 @@ namespace OnlineStore.Controllers
         //POST ProductPage/LinkToCategory
         //DATA: categoryId={categoryId}&productId={productId}
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> LinkToCategory([FromForm]int productId, [FromForm]int categoryId)
         {
             await _categoryService.LinkCategoryToProduct(categoryId, productId);
@@ -159,6 +168,7 @@ namespace OnlineStore.Controllers
         //POST ProductPage/UnlinkFromCategory
         //DATA: categoryId={categoryId}&productId={productId}
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UnlinkFromCategory([FromForm] int productId, [FromForm] int categoryId)
         {
             await _categoryService.UnlinkCategoryFromProduct(categoryId, productId);

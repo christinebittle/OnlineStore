@@ -59,6 +59,7 @@ namespace CoreEntityFramework.Controllers
         /// GET: api/OrderItems/Find/1 -> {OrderItemDto}
         /// </example>
         [HttpGet(template: "Find/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<OrderItemDto>> FindOrderItem(int id)
         {
             // include will join order(i)tem with 1 product, 1 order, 1 customer
@@ -89,6 +90,7 @@ namespace CoreEntityFramework.Controllers
         /// 204 No Content
         /// </returns>
         [HttpPut(template: "Update/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> UpdateOrderItem(int id, OrderItemDto orderItemDto)
         {
             // {id} in URL must match OrderItemId in POST Body
@@ -129,6 +131,7 @@ namespace CoreEntityFramework.Controllers
         /// 404 Not Found
         /// </returns>
         [HttpPost(template: "Add")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<OrderItem>> AddOrderItem(OrderItemDto orderItemDto)
         {
             ServiceResponse response = await _orderItemService.AddOrderItem(orderItemDto);
@@ -156,6 +159,7 @@ namespace CoreEntityFramework.Controllers
         /// 404 Not Found
         /// </returns>
         [HttpDelete("Delete/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteOrderItem(int id)
         {
             ServiceResponse response = await _orderItemService.DeleteOrderItem(id);
@@ -176,6 +180,7 @@ namespace CoreEntityFramework.Controllers
 
         //ListOrderItemsForOrder
         [HttpGet(template: "ListForOrder/{id}")]
+        [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> ListOrderItemsForOrder(int id)
         {
             // empty list of data transfer object OrderItemDto
@@ -187,6 +192,7 @@ namespace CoreEntityFramework.Controllers
 
         //ListOrderItemsForProduct
         [HttpGet(template: "ListForProduct/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> ListOrderItemsForProduct(int id)
         {
             // empty list of data transfer object OrderItemDto
