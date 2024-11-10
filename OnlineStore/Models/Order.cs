@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace OnlineStore.Models
@@ -36,7 +37,11 @@ namespace OnlineStore.Models
 
         public string CustomerName { get; set; }
 
+        public string CustomerId { get; set; }
+
         //todo: add more information for Orders
+
+        public int NumItems { get; set; }
 
     }
 

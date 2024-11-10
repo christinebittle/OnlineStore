@@ -18,6 +18,9 @@ namespace OnlineStore.Interfaces
         // related methods:
 
         // ListOrdersForCustomer(int customerid)
-        IEnumerable<OrderDto> ListOrdersForCustomer(int customerId);
+        Task<IEnumerable<OrderDto>> ListOrdersForCustomer(string customerId);
+
+        Task<IEnumerable<OrderDto>> ListMyOrders();
+
     }
 }

@@ -32,7 +32,7 @@ namespace CoreEntityFramework.Controllers
         /// </returns>
         /// <example>
         /// GET: api/Customer/List -> [{CustomerDto},{CustomerDto}]
-        //  HEADERS: Cookie: .AspNetCore.Identity.Application={token}
+        ///  HEADERS: Cookie: .AspNetCore.Identity.Application={token}
         /// </example>
         [HttpGet(template: "List")]
         [Authorize(Roles="admin")]
@@ -50,8 +50,8 @@ namespace CoreEntityFramework.Controllers
         /// </returns>
         /// <example>
         /// GET: api/Customer/Find/{id}
-        //  HEADERS: Cookie: .AspNetCore.Identity.Application={token}
-        // -> {CustomerDto}
+        ///  HEADERS: Cookie: .AspNetCore.Identity.Application={token}
+        /// -> {CustomerDto}
         /// </example>
         [HttpGet(template: "Find/{id}")]
         [Authorize(Roles = "admin")]

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<OnlineStore.Models.OrderDto>
+
+@foreach (OnlineStore.Models.OrderDto orderDto in Model)
+{
+    <div>
+        @orderDto.OrderId @orderDto.OrderDate @orderDto.CustomerName
+    </div>
+
+}
