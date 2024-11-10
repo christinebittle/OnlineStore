@@ -20,6 +20,7 @@ This example has an image uploading feature for Products
 5. [Simple Authentication](https://github.com/christinebittle/OnlineStore/tree/Authentication1)
 6. [Image/File Upload](https://github.com/christinebittle/OnlineStore/tree/product-image-upload)
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
+8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 
 ## Test Your Understanding!
 - Modify ProductDto on ListProducts, ShowProduct
