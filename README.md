@@ -1,5 +1,5 @@
-# .NET Core Authentication 2
-This example introduces roles in ASP.NET Individual User Accounts, and how to manage access by a User's Role (admin, customer)
+# .NET Core Conditional Access
+This example continues with conditional access to Orders
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
@@ -23,8 +23,4 @@ This example introduces roles in ASP.NET Individual User Accounts, and how to ma
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 
 ## Test Your Understanding!
-- Only users with the 'administrator' role should access ListOrderItems
-- Implement ListMyOrders in OrderService, using httpContextAccessor to get the current logged in user
-- Implement API GET: Orders/ListMyOrders which is accessible for Customers
-- Build a web page that allows users to see a list of their own Orders by calling the ListMyOrders method in the OrderService
-- Consider what it would mean to manipulate OrderItems within the context of a Customer vs. an Admin, and the associated Authorization needed!
+- Create an Admin Page "All Orders" which only administrators can see
