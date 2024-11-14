@@ -19,14 +19,16 @@ namespace OnlineStore.Controllers
         }
 
         /// <summary>
-        /// Returns a list of Orders, each represented by an OrderDto with their associated Customer
+        /// Returns a list of Orders, each represented by an OrderDto with their associated Customer. Admin only
         /// </summary>
         /// <returns>
         /// 200 OK
         /// [{OrderDto},{OrderDto},..]
         /// </returns>
         /// <example>
-        /// GET: api/Order/List -> [{OrderDto},{OrderDto},..]
+        /// GET: api/Order/List
+        /// HEADER: Cookie: .AspNetCore.Identity.Application={Token}
+        /// -> [{OrderDto},{OrderDto},..]
         /// </example>
         [HttpGet(template: "List")]
         [Authorize(Roles = "admin")]
