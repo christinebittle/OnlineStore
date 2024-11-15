@@ -8,12 +8,11 @@ This example includes conditional rendering on the product page, and a paginatio
 - Add Customer, Order records
 - Interact with Ordered Items, Products, Categories through API
 - Create an account on the sample app
-- Add 'customer' Role in AspNetRoles
 - Add 'admin' Role in AspNetRoles
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
-- Repeat steps, creating a non-admin user with a 'customer' role
-- Create Orders and OrderItems associated with customers
-- Access Orders through customer vs. admin accounts
+- Interact with products as an admin vs. non admin
+- Add 5 or more product records with images
+  
 
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
