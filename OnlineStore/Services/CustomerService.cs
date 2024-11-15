@@ -5,7 +5,7 @@ using OnlineStore.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CoreEntityFramework.Services
+namespace OnlineStore.Services
 {
     public class CustomerService : ICustomerService
     {

@@ -2,9 +2,9 @@
 using OnlineStore.Models;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
-using OnlineStore.Models;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Drawing;
 
 namespace CoreEntityFramework.Services
 {
@@ -18,35 +18,54 @@ namespace CoreEntityFramework.Services
         }
 
 
-        public async Task<IEnumerable<ProductDto>> ListProducts()
+        public async Task<IEnumerable<ProductDto>> ListProducts(int skip, int page)
         {
-            // all Products
+            // MySQL equivalent:
+            // select * from products order by productid asc limit {skip}, {page}
+            // MSSQL equivalent:
+            // select * from products order by productid asc offset {skip} rows fetch first {take} rows only;
             List<Product> Products = await _context.Products
+                .OrderBy(p=>p.ProductId)
+                .Skip(skip)
+                .Take(page)
                 .ToListAsync();
             // empty list of data transfer object ProductDto
             List<ProductDto> ProductDtos = new List<ProductDto>();
             // foreach Order Item record in database
             foreach (Product Product in Products)
             {
+                string Image = "";
+                if (Product.HasPic)
+                {
+                    Image = $"/images/products/{Product.ProductId}{Product.PicExtension}";
+                }
                 // create new instance of ProductDto, add to list
                 ProductDtos.Add(new ProductDto()
                 {
                     ProductId = Product.ProductId,
                     ProductName = Product.ProductName,
                     ProductSKU = Product.ProductSKU,
-                    ProductPrice = Product.ProductPrice
+                    ProductPrice = Product.ProductPrice,
+                    HasProductPic = Product.HasPic,
+                    ProductImagePath = Image
                 });
+
+                
             }
             // return ProductDtos
             return ProductDtos;
 
         }
 
+        public async Task<int> CountProducts()
+        {
+            return await _context.Products.CountAsync();
+        }
+
 
         public async Task<ProductDto?> FindProduct(int id)
         {
-            // include will join order(i)tem with 1 product, 1 order, 1 customer
-            // first or default async will get the first order(i)tem matching the {id}
+            // One product matching the product id
             var Product = await _context.Products
                 .FirstOrDefaultAsync(p => p.ProductId == id);
 
@@ -55,13 +74,22 @@ namespace CoreEntityFramework.Services
             {
                 return null;
             }
+
+            string Image = "";
+            if (Product.HasPic)
+            {
+                Image = $"/images/products/{Product.ProductId}{Product.PicExtension}";
+            }
+
             // create an instance of ProductDto
             ProductDto ProductDto = new ProductDto()
             {
                 ProductId = Product.ProductId,
                 ProductName = Product.ProductName,
                 ProductSKU = Product.ProductSKU,
-                ProductPrice = Product.ProductPrice
+                ProductPrice = Product.ProductPrice,
+                HasProductPic = Product.HasPic,
+                ProductImagePath = Image
             };
             return ProductDto;
 
@@ -72,15 +100,21 @@ namespace CoreEntityFramework.Services
         {
             ServiceResponse serviceResponse = new();
 
+            Product? Product = await _context.Products.FindAsync(ProductDto.ProductId);
+
+            if (Product == null)
+            {
+                serviceResponse.Messages.Add("Product could not be found");
+                serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
+                return serviceResponse;
+            }
+
+            Product.ProductName = ProductDto.ProductName;
+            Product.ProductPrice = ProductDto.ProductPrice;
+            Product.ProductSKU = ProductDto.ProductSKU;
 
             // Create instance of Product
-            Product Product = new Product()
-            {
-                ProductId = ProductDto.ProductId,
-                ProductName = ProductDto.ProductName,
-                ProductSKU = ProductDto.ProductSKU,
-                ProductPrice = ProductDto.ProductPrice
-            };
+
             // flags that the object has changed
             _context.Entry(Product).State = EntityState.Modified;
             // handled by another method
@@ -90,13 +124,17 @@ namespace CoreEntityFramework.Services
             try
             {
                 // SQL Equivalent: Update Products set ... where ProductId={id}
+                //_context.Products.Update(Product);
+                //_context.SaveChanges();
                 await _context.SaveChangesAsync();
+
+
             }
             catch (DbUpdateConcurrencyException)
             {
                 serviceResponse.Status = ServiceResponse.ServiceStatus.Error;
                 serviceResponse.Messages.Add("An error occurred updating the record");
-                
+
                 return serviceResponse;
             }
 
@@ -142,7 +180,7 @@ namespace CoreEntityFramework.Services
         public async Task<ServiceResponse> DeleteProduct(int id)
         {
             ServiceResponse response = new();
-            // Order Item must exist in the first place
+            // Product must exist in the first place
             var Product = await _context.Products.FindAsync(id);
             if (Product == null)
             {

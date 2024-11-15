@@ -48,15 +48,18 @@
             </form>
         </div>
         <div>
-            <h3>Ordered:</h3>
-            <div>
-                @foreach(var OrderItemDto in Model.ProductOrderedItems)
-                {
-                    
-                    <div>(@OrderItemDto.CustomerName @OrderItemDto.OrderDate) @OrderItemDto.OrderItemQty &times; @OrderItemDto.OrderItemUnitPrice = @OrderItemDto.OrderItemSubtotal</div>
-                }
+            @if (Model.ProductOrderedItems != null)
+            {
+                <h3>Ordered:</h3>
+                <div>
+                    @foreach (var OrderItemDto in Model.ProductOrderedItems)
+                    {
 
-            </div>
+                        <div>(@OrderItemDto.CustomerName @OrderItemDto.OrderDate) @OrderItemDto.OrderItemQty &times; @OrderItemDto.OrderItemUnitPrice = @OrderItemDto.OrderItemSubtotal</div>
+                    }
+
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -1,11 +1,26 @@
-﻿@model IEnumerable<ProductDto>
+﻿@model OnlineStore.Models.ViewModels.ProductList
 
-<a href="/ProductPage/New">New</a>
-<div class="row">
-@foreach(var Product in Model)
+@if (Model.isAdmin)
 {
-    <div>
-        <a href="/ProductPage/Details/@Product.ProductId">@Product.ProductName $@Product.ProductPrice</a>
+    <a href="/ProductPage/New">New</a>
+}
+<div style="margin-bottom:20px;">
+    @if (Model.MaxPage > 0)
+    {
+        <a href="/ProductPage/List?PageNum=@(Model.Page - 1)">&laquo; Prev</a> <span>Page @(Model.Page + 1) of @(Model.MaxPage + 1)</span> <a href="/ProductPage/List?PageNum=@(Model.Page + 1)">Next &raquo;</a>
+    }
+</div>
+<div class="row">
+@foreach(var Product in Model.Products)
+{
+    <div class="record">
+        <div class="_record">
+                <div class="imagecontainer">
+                    <img src="@Product.ProductImagePath" alt="@Product.ProductName" />
+                
+                </div>
+                <div class="recordtitle"><a href="/ProductPage/Details/@Product.ProductId">@Product.ProductName $@Product.ProductPrice</a></div>
+        </div>
     </div>
 }
 </div>

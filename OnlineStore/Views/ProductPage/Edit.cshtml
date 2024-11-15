@@ -1,6 +1,6 @@
 ﻿@model ProductDto
 
-<form method="POST" action="/ProductPage/Update/@Model.ProductId">
+<form method="POST" action="/ProductPage/Update/@Model.ProductId" enctype="multipart/form-data">
     <div style="display:none"><input name="ProductId" value="@Model.ProductId" /></div>
     <div>
         <label for="ProductName">Product Name:</label>
@@ -13,6 +13,10 @@
     <div>
         <label for="ProductName">Product Price:</label>
         <input type="text" name="ProductPrice" id="ProductPrice" value="@Model.ProductPrice" />
+    </div>
+    <div>
+        <label for="ProductPic">Image:</label>
+        <input type="file" name="ProductPic" id="ProductPic" />
     </div>
     <div>
         <input type="submit" value="Edit Product" />

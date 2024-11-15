@@ -22,7 +22,7 @@ namespace OnlineStore.Interfaces
 
         Task<IEnumerable<OrderDto>> ListMyOrders();
 
-        Task<OrderDto> FindOrder(int orderId);
+        Task<OrderDto?> FindOrder(int orderId);
 
     }
 }

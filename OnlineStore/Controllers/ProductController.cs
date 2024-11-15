@@ -27,20 +27,27 @@ namespace CoreEntityFramework.Controllers
 
 
         /// <summary>
-        /// Returns a list of Products
+        /// Returns a list of Products. Pageable with optional parameters start and perpage
         /// </summary>
+        /// <param name="skip">The number of records to skip, ordered by ID ascending</param>
+        /// <param name="page">The number of records to get</param>
         /// <returns>
         /// 200 OK
         /// [{ProductDto},{ProductDto},..]
         /// </returns>
         /// <example>
         /// GET: api/Product/List -> [{ProductDto},{ProductDto},..]
+        /// 
+        /// GET: api/Product/List?start=0&perpage=100 -> [{ProductDto},{ProductDto},..+98]
         /// </example>
         [HttpGet(template: "List")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> ListProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> ListProducts(int? skip, int? page)
         {
+            if (skip == null) skip = 0;
+            if (page == null) page = await _productService.CountProducts();
+
             // empty list of data transfer object ProductDto
-            IEnumerable<ProductDto> ProductDtos = await _productService.ListProducts();
+            IEnumerable <ProductDto> ProductDtos = await _productService.ListProducts((int)skip, (int)page);
             // return 200 OK with ProductDtos
             return Ok(ProductDtos);
         }

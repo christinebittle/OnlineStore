@@ -42,7 +42,7 @@ namespace OnlineStore.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             OrderItemDto? OrderItemDto = await _orderItemService.FindOrderItem(id);
-            IEnumerable<ProductDto> Products = await _productService.ListProducts();
+            IEnumerable<ProductDto> Products = await _productService.ListProducts(0,0);
             IEnumerable<OrderDto> Orders = await _orderService.ListOrders();
             if (OrderItemDto == null)
             {
@@ -83,7 +83,7 @@ namespace OnlineStore.Controllers
         public async Task<IActionResult> New()
         {
 
-            IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts();
+            IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts(0,0);
 
             IEnumerable<OrderDto?> OrderDtos = await _orderService.ListOrders();
 

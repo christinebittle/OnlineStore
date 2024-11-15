@@ -43,7 +43,7 @@ namespace CoreEntityFramework.Services
                     OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
                     CustomerName = Order.Customer.UserName,
                     CustomerId = Order.Customer.Id,
-                    NumItems = Order.OrderItems.Count()
+                    NumItems = Order.OrderItems.Count
                 });
             }
             // return OrderDtos
@@ -70,7 +70,7 @@ namespace CoreEntityFramework.Services
                     OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
                     CustomerName = Order.Customer.UserName,
                     CustomerId = Order.Customer.Id,
-                    NumItems = Order.OrderItems.Count()
+                    NumItems = Order.OrderItems.Count
                 });
             }
             // return OrderDtos
@@ -101,7 +101,7 @@ namespace CoreEntityFramework.Services
                     OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
                     CustomerName = Order.Customer.UserName,
                     CustomerId = Order.Customer.Id,
-                    NumItems = Order.OrderItems.Count()
+                    NumItems = Order.OrderItems.Count
                 });
             }
             // return OrderDtos
@@ -109,19 +109,20 @@ namespace CoreEntityFramework.Services
         }
 
 
-        public async Task<OrderDto> FindOrder(int orderId)
+        public async Task<OrderDto?> FindOrder(int orderId)
         {
             IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            string customerId = User.Id;
 
-            
-
-            // all orders for a customer
-            Order Order = await _context.Orders
+            // order itself
+            Order? Order = await _context.Orders
                 .Include(o => o.Customer)
                 .Include(o => o.OrderItems)
                 .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
+            if (Order == null || User == null) return null;
+
+            
+            string customerId = User.Id;
             bool isUserAdmin = await _userManager.IsInRoleAsync(User, "admin");
 
             // conditional access to order record - admin or customer who made the order
@@ -137,7 +138,7 @@ namespace CoreEntityFramework.Services
                 OrderDate = Order.OrderDate.ToString("yyyy-MM-dd"),
                 CustomerName = Order.Customer.UserName,
                 CustomerId = Order.Customer.Id,
-                NumItems = Order.OrderItems.Count()
+                NumItems = Order.OrderItems.Count
             };
             
         }

@@ -20,10 +20,10 @@ namespace OnlineStore.Interfaces
 
         // related methods
 
-        Task<IEnumerable<OrderItemDto>> ListOrderItemsForOrder(int id);
+        Task<IEnumerable<OrderItemDto?>> ListOrderItemsForOrder(int id);
 
 
-        Task<IEnumerable<OrderItemDto>> ListOrderItemsForProduct(int id);
+        Task<IEnumerable<OrderItemDto?>> ListOrderItemsForProduct(int id);
 
     }
 }

@@ -5,8 +5,9 @@ namespace OnlineStore.Interfaces
     public interface IProductService
     {
         // base CRUD
-        Task<IEnumerable<ProductDto>> ListProducts();
+        Task<IEnumerable<ProductDto>> ListProducts(int skip, int page);
 
+        Task<int> CountProducts();
 
         Task<ProductDto?> FindProduct(int id);
 

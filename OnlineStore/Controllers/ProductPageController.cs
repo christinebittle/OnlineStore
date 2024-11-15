@@ -3,6 +3,8 @@ using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineStore.Controllers
 {
@@ -12,13 +14,19 @@ namespace OnlineStore.Controllers
         private readonly IProductService _productService;
         private readonly IOrderItemService _orderItemService;
 
+        //determine if user is admin
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         // dependency injection of service interface
-        public ProductPageController(IProductService ProductService, ICategoryService CategoryService, IOrderItemService OrderItemService)
+        public ProductPageController(IProductService ProductService, ICategoryService CategoryService, IOrderItemService OrderItemService, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
            
             _productService = ProductService;
             _categoryService = CategoryService;
             _orderItemService = OrderItemService;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -26,12 +34,39 @@ namespace OnlineStore.Controllers
             return RedirectToAction("List");
         }
 
-        // GET: ProductPage/List
+        // GET: ProductPage/List?page={pagenum}
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int PageNum=0)
         {
-            IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts();
-            return View(ProductDtos);
+            // infer start and skip values from pagenum
+            // assume 4 records per page in this example
+            int PerPage = 4;
+            // Determines the maximum number of pages (rounded up), assuming a page 0 start.
+            int MaxPage = (int)Math.Ceiling((decimal) await _productService.CountProducts() / PerPage) - 1;
+
+            // Lower boundary for Max Page
+            if (MaxPage < 0) MaxPage = 0;
+            // Lower boundary for Page Number
+            if (PageNum < 0) PageNum = 0;
+            // Upper Bound for Page Number
+            if (PageNum > MaxPage) PageNum = MaxPage;
+
+            // The Record Index of our Page Start
+            int StartIndex = PerPage * PageNum;
+
+            IEnumerable<ProductDto?> ProductDtos = await _productService.ListProducts(StartIndex,PerPage);
+
+            ProductList ViewModel = new ProductList();
+            ViewModel.Products = ProductDtos;
+            ViewModel.MaxPage = MaxPage; 
+            ViewModel.Page = PageNum;
+
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if (User!=null) ViewModel.isAdmin = await _userManager.IsInRoleAsync(User, "admin");
+
+
+
+            return View(ViewModel);
         }
 
         // GET: ProductPage/Details/{id}
@@ -43,7 +78,7 @@ namespace OnlineStore.Controllers
             IEnumerable<CategoryDto> Categories = await _categoryService.ListCategories();
 
             //need the ordered items for this product
-            IEnumerable<OrderItemDto> OrderItems = await _orderItemService.ListOrderItemsForProduct(id);
+            IEnumerable<OrderItemDto?> OrderItems = await _orderItemService.ListOrderItemsForProduct(id);
 
             if (ProductDto == null)
             {
@@ -107,8 +142,10 @@ namespace OnlineStore.Controllers
         //POST ProductPage/Update/{id}
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Update(int id, ProductDto ProductDto)
+        public async Task<IActionResult> Update(int id, ProductDto ProductDto, IFormFile ProductPic)
         {
+            ServiceResponse imageresponse = await _productService.UpdateProductImage(id, ProductPic);
+
             ServiceResponse response = await _productService.UpdateProduct(ProductDto);
 
             if (response.Status == ServiceResponse.ServiceStatus.Updated)

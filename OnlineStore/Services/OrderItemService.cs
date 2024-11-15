@@ -217,9 +217,10 @@ namespace OnlineStore.Services
 
         }
 
-        public async Task<IEnumerable<OrderItemDto>> ListOrderItemsForOrder(int id)
+        public async Task<IEnumerable<OrderItemDto?>> ListOrderItemsForOrder(int id)
         {
             IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if (User == null) return null;
             string customerId = User.Id;
             bool isUserAdmin = await _userManager.IsInRoleAsync(User, "admin");
 
@@ -262,8 +263,14 @@ namespace OnlineStore.Services
 
         }
 
-        public async Task<IEnumerable<OrderItemDto>> ListOrderItemsForProduct(int id)
+        public async Task<IEnumerable<OrderItemDto?>> ListOrderItemsForProduct(int id)
         {
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if (User == null) return null;
+
+            string customerId = User.Id;
+            bool isUserAdmin = await _userManager.IsInRoleAsync(User, "admin");
+
             // WHERE productid == id
             List<OrderItem> orderItems = await _context.OrderItems
                 .Include(i => i.Product)
@@ -277,6 +284,9 @@ namespace OnlineStore.Services
             // foreach Order Item record in database
             foreach (OrderItem orderItem in orderItems)
             {
+                // conditional access to order item - admin or customer who made the order
+                if ((orderItem.Order.Customer.Id != customerId) && !isUserAdmin) continue;
+
                 // create new instance of OrderItemDto, add to list
                 orderItemDtos.Add(new OrderItemDto()
                 {
