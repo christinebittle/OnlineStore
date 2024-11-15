@@ -1,5 +1,5 @@
 # .NET Core Conditional Access
-This example continues with conditional access to Orders
+This example includes conditional rendering on the product page, and a pagination feature on products
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
@@ -26,5 +26,5 @@ This example continues with conditional access to Orders
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 
 ## Test Your Understanding!
-- Modify "Show Product" page so that only Admins can access the order items for a product
+- Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
 
