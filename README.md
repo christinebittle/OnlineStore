@@ -25,6 +25,8 @@ This example utilizes the \[Authorize\] attribute to restrict access based on au
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+
 
 ## Test Your Understanding!
 - Restrict the OrderItems API to use \[Authorize\] on Delete operatiohn
