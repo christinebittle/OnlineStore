@@ -5,16 +5,24 @@ using OnlineStore.Data;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Drawing;
+using System.Text.Encodings.Web;
+using Ganss.Xss;
+
 
 namespace CoreEntityFramework.Services
 {
     public class ProductService : IProductService
     {
+
+        // dependency injection database context 
         private readonly AppDbContext _context;
-        // dependency injection of database context
-        public ProductService(AppDbContext context)
+        // sanitize content to reduce XSS vulnerability
+        private IHtmlSanitizer _htmlSanitizer;
+
+        public ProductService(AppDbContext context, IHtmlSanitizer htmlSanitizer)
         {
             _context = context;
+            _htmlSanitizer = htmlSanitizer;
         }
 
 
@@ -93,6 +101,7 @@ namespace CoreEntityFramework.Services
                 ProductSKU = Product.ProductSKU,
                 ProductPrice = Product.ProductPrice,
                 HasProductPic = Product.HasPic,
+                ProductDescription = Product.ProductDescription,
                 ProductImagePath = Image
             };
             return ProductDto;
@@ -116,6 +125,7 @@ namespace CoreEntityFramework.Services
             Product.ProductName = ProductDto.ProductName;
             Product.ProductPrice = ProductDto.ProductPrice;
             Product.ProductSKU = ProductDto.ProductSKU;
+            Product.ProductDescription = _htmlSanitizer.Sanitize(ProductDto.ProductDescription);
 
             // Create instance of Product
 
@@ -157,7 +167,8 @@ namespace CoreEntityFramework.Services
             {
                 ProductName = ProductDto.ProductName,
                 ProductSKU = ProductDto.ProductSKU,
-                ProductPrice = ProductDto.ProductPrice
+                ProductPrice = ProductDto.ProductPrice,
+                ProductDescription = _htmlSanitizer.Sanitize(ProductDto.ProductDescription)
             };
             // SQL Equivalent: Insert into Products (..) values (..)
 

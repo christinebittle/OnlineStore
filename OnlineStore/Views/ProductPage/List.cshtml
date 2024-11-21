@@ -16,7 +16,7 @@
     <div class="record">
         <div class="_record">
                 <div class="imagecontainer">
-                    <img src="@Product.ProductImagePath" alt="@Product.ProductName" />
+                    <a data-lightbox="Product_@Product.ProductId" href="@Product.ProductImagePath" data-title="@Product.ProductName $@Product.ProductPrice"><img src="@Product.ProductImagePath" alt="@Product.ProductName" /></a>
                 
                 </div>
                 <div class="recordtitle"><a href="/ProductPage/Details/@Product.ProductId">@Product.ProductName $@Product.ProductPrice</a></div>

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "lightbox2@2.11.5",
+      "destination": "wwwroot/js/lightbox2/",
+      "files": [
+        "js/lightbox.min.js",
+        "css/lightbox.min.css",
+        "images/close.png",
+        "images/loading.gif",
+        "images/next.png",
+        "images/prev.png"
+      ]
+    }
+  ]
+}

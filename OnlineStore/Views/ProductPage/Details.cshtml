@@ -14,7 +14,15 @@
             <label>SKU</label>
             <div>@Model.Product.ProductSKU</div>
         </div>
-        
+        <div>
+            <label>Description</label>
+            @*
+                // WARNING! Danger of XSS attack
+                // https://learn.microsoft.com/en-us/aspnet/core/security/cross-site-scripting?view=aspnetcore-8.0
+                // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+            *@
+            <div>@Html.Raw(Model.Product.ProductDescription)</div>
+        </div>
         <div>
             <label>Price</label>
             <div>@Model.Product.ProductPrice</div>

@@ -5,6 +5,8 @@ using OnlineStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Ganss.Xss;
+
 
 namespace OnlineStore.Controllers
 {
@@ -13,6 +15,7 @@ namespace OnlineStore.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IOrderItemService _orderItemService;
+        
 
         //determine if user is admin
         private readonly UserManager<IdentityUser> _userManager;
@@ -27,6 +30,7 @@ namespace OnlineStore.Controllers
             _orderItemService = OrderItemService;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            
         }
 
         public IActionResult Index()
@@ -75,7 +79,9 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            ProductDto? ProductDto = await _productService.FindProduct(id);
+            ProductDto? ProductDto = await _productService.FindProduct(id);    
+
+
             IEnumerable<CategoryDto> AssociatedCategories = await _categoryService.ListCategoriesForProduct(id);
             IEnumerable<CategoryDto> Categories = await _categoryService.ListCategories();
 

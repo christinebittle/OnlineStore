@@ -13,6 +13,7 @@ namespace OnlineStore.Models
 
         public decimal ProductPrice { get; set; }
 
+        public string ProductDescription { get; set; }
         public bool HasPic { get; set; } = false;
         
         // images stored in /wwwroot/images/products/{ProductId}.{PicExtension}
@@ -36,6 +37,8 @@ namespace OnlineStore.Models
 
         public decimal ProductPrice { get; set; }
 
+
+        public string ProductDescription { get; set; }
 
         // bool if there is a pic, false otherwise
         public bool HasProductPic { get; set; }

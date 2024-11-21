@@ -1,4 +1,5 @@
 using CoreEntityFramework.Services;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
@@ -31,6 +32,11 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
+
+// sanitizer
+IHtmlSanitizer sanitizer = new HtmlSanitizer();
+builder.Services.AddSingleton<IHtmlSanitizer>(sanitizer);
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
