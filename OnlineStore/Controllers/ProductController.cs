@@ -27,7 +27,7 @@ namespace CoreEntityFramework.Controllers
 
 
         /// <summary>
-        /// Returns a list of Products. Pageable with optional parameters start and perpage
+        /// Returns a list of Products. Pageable with optional parameters skip and page
         /// </summary>
         /// <param name="skip">The number of records to skip, ordered by ID ascending</param>
         /// <param name="page">The number of records to get</param>

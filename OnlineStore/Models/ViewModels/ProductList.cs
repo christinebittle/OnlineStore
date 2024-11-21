@@ -2,6 +2,8 @@
 {
     public class ProductList
     {
+        // This ViewModel is the structure needed for us to render
+        // ProductPage/List.cshtml
 
         public IEnumerable<ProductDto> Products { get; set; }
 

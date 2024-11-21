@@ -34,7 +34,8 @@ namespace OnlineStore.Controllers
             return RedirectToAction("List");
         }
 
-        // GET: ProductPage/List?page={pagenum}
+        // GET: ProductPage/List?PageNum={pagenum}
+        // GET: ProductPage/List
         [HttpGet]
         public async Task<IActionResult> List(int PageNum=0)
         {
@@ -62,10 +63,11 @@ namespace OnlineStore.Controllers
             ViewModel.Page = PageNum;
 
             IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            if (User!=null) ViewModel.isAdmin = await _userManager.IsInRoleAsync(User, "admin");
+            if (User != null) ViewModel.isAdmin = await _userManager.IsInRoleAsync(User, "admin");
+            else ViewModel.isAdmin = false;
 
 
-
+            // Directs to /ProductPage/List.cshtml
             return View(ViewModel);
         }
 
