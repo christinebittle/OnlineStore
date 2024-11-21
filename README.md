@@ -1,5 +1,5 @@
 # .NET Core Conditional Access
-This example continues with conditional access to Orders
+This example includes conditional rendering on the product page, and a pagination feature on products
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
@@ -8,12 +8,11 @@ This example continues with conditional access to Orders
 - Add Customer, Order records
 - Interact with Ordered Items, Products, Categories through API
 - Create an account on the sample app
-- Add 'customer' Role in AspNetRoles
 - Add 'admin' Role in AspNetRoles
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
-- Repeat steps, creating a non-admin user with a 'customer' role
-- Create Orders and OrderItems associated with customers
-- Access Orders through customer vs. admin accounts
+- Interact with products as an admin vs. non admin
+- Add 5 or more product records with images
+  
 
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
@@ -24,7 +23,8 @@ This example continues with conditional access to Orders
 6. [Image/File Upload](https://github.com/christinebittle/OnlineStore/tree/product-image-upload)
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
+9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 
 ## Test Your Understanding!
-- Modify "Show Product" page so that only Admins can access the order items for a product
+- Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
 
