@@ -1,5 +1,5 @@
-# .NET Core Conditional Access
-This example includes conditional rendering on the product page, and a pagination feature on products
+# .NET Core Client Integration
+This example includes client-side integration with the [Lightbox2](https://lokeshdhakar.com/projects/lightbox2/) plugin and [tinymce](https://www.tiny.cloud/).
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
@@ -12,6 +12,11 @@ This example includes conditional rendering on the product page, and a paginatio
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
 - Interact with products as an admin vs. non admin
 - Add 5 or more product records with images
+- Explore editing product descriptions with HTML and JS content
+- Get an API key with TinyMCE
+- Remove the sanitization in ProductService
+- Remove reference to TinyMCE to edit text area directly
+- Observe that product description is now vulnerable to XSS by injection JS into the input
   
 
 ## Index of Examples
@@ -26,5 +31,6 @@ This example includes conditional rendering on the product page, and a paginatio
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 
 ## Test Your Understanding!
-- Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
+- Translate another field into a rich text field, such as the category description
+- Add your own client script integration into this example project!
 
