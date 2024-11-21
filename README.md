@@ -12,7 +12,7 @@ This example includes conditional rendering on the product page, and a paginatio
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
 - Interact with products as an admin vs. non admin
 - Add 5 or more product records with images
-  
+
 
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
@@ -24,6 +24,7 @@ This example includes conditional rendering on the product page, and a paginatio
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
 
 ## Test Your Understanding!
 - Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
