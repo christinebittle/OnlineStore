@@ -23,6 +23,8 @@ This example introduces roles in ASP.NET Individual User Accounts, and how to ma
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+
 
 ## Test Your Understanding!
 - Only users with the 'administrator' role should access ListOrderItems
