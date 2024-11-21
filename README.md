@@ -25,6 +25,7 @@ This example continues with conditional access to Orders
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
 
 ## Test Your Understanding!
 - Modify "Show Product" page so that only Admins can access the order items for a product
