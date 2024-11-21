@@ -39,6 +39,10 @@ namespace CoreEntityFramework.Services
                 {
                     Image = $"/images/products/{Product.ProductId}{Product.PicExtension}";
                 }
+                else
+                {
+                    Image = $"/images/products/default.jpg";
+                }
                 // create new instance of ProductDto, add to list
                 ProductDtos.Add(new ProductDto()
                 {
@@ -247,6 +251,13 @@ namespace CoreEntityFramework.Services
                 response.Messages.Add($"Product {id} not found");
                 return response;
             }
+
+            if (ProductPic == null)
+            {
+                response.Status = ServiceResponse.ServiceStatus.Error;
+                response.Messages.Add("No picture included");
+                return response;
+            };
 
             if (ProductPic.Length > 0)
             {
