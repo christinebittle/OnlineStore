@@ -30,6 +30,7 @@ This example includes client-side integration with the [Lightbox2](https://lokes
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
 - Translate another field into a rich text field, such as the category description
