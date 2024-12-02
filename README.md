@@ -33,7 +33,6 @@ This example includes a worker that periodically calls [openai.com](Open AI) API
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
 11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
-10. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
 - Create your own worker that independently logs a 'Hello' message every thirty seconds
