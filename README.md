@@ -2,7 +2,7 @@
 This example includes a worker that periodically calls an open AI API to generate product descriptions.
 
 > [!WARNING]
-> This is purely an example of server to server connection. The AI Generated content created is entirely fictional. Instructor / Institution is not liable for any generated content from the example, it is for entertainment purposes only.
+> This example is only meant to demonstrate server to server connection. The AI Generated content created is entirely fictional. Instructor / Institution is not liable for any generated content from the example, it is for entertainment purposes only.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
