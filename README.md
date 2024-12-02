@@ -12,6 +12,8 @@ This example has an image uploading feature for Products
 - Upload new image for same product
 - Look for database columns for product with picture, without picture
 
+
+
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
 2. [Core API](https://github.com/christinebittle/CoreAPI)
@@ -23,6 +25,7 @@ This example has an image uploading feature for Products
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 
 ## Test Your Understanding!
