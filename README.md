@@ -13,6 +13,8 @@ This example introduces roles in ASP.NET Individual User Accounts, and how to ma
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
 - Repeat steps, creating a non-admin user with a 'customer' role
 
+
+
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
 2. [Core API](https://github.com/christinebittle/CoreAPI)
@@ -24,7 +26,7 @@ This example introduces roles in ASP.NET Individual User Accounts, and how to ma
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
-
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
 - Only users with the 'administrator' role should access ListOrderItems
