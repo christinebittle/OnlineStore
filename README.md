@@ -19,6 +19,8 @@ This example includes a worker that periodically calls [openai.com](Open AI) API
 - Running the project will periodically update products with AI descriptions
   
 
+
+
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
 2. [Core API](https://github.com/christinebittle/CoreAPI)
@@ -29,6 +31,8 @@ This example includes a worker that periodically calls [openai.com](Open AI) API
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 10. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
