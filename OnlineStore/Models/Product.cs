@@ -13,11 +13,15 @@ namespace OnlineStore.Models
 
         public decimal ProductPrice { get; set; }
 
+        // flag for content that is ai generated
+        public bool ai_generated { get; set; }
         public string ProductDescription { get; set; }
         public bool HasPic { get; set; } = false;
         
         // images stored in /wwwroot/images/products/{ProductId}.{PicExtension}
         public string? PicExtension { get; set; }
+
+
 
         //A product can have many categories
         public ICollection<Category>? Categories { get; set; }
@@ -37,6 +41,7 @@ namespace OnlineStore.Models
 
         public decimal ProductPrice { get; set; }
 
+        public bool ai_generated { get; set; }
 
         public string ProductDescription { get; set; }
 

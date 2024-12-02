@@ -102,6 +102,7 @@ namespace CoreEntityFramework.Services
                 ProductPrice = Product.ProductPrice,
                 HasProductPic = Product.HasPic,
                 ProductDescription = Product.ProductDescription,
+                ai_generated=Product.ai_generated,
                 ProductImagePath = Image
             };
             return ProductDto;

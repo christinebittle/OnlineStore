@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Data;
 using OnlineStore.Interfaces;
+using OnlineStore.Models;
 using OnlineStore.Services;
+using OnlineStore.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +38,10 @@ builder.Services.AddEndpointsApiExplorer();
 // sanitizer
 IHtmlSanitizer sanitizer = new HtmlSanitizer();
 builder.Services.AddSingleton<IHtmlSanitizer>(sanitizer);
+
+// worker
+builder.Services.AddHostedService<GPTWorker>();
+builder.Services.AddHttpClient<GPTWorker>();
 
 builder.Services.AddSwaggerGen();
 
