@@ -1,5 +1,8 @@
 # .NET Core Conditional Access
-This example includes conditional rendering on the product page, and a pagination feature on products
+This example includes a worker that periodically calls an open AI API to generate product descriptions.
+
+> [!WARNING]
+> This is purely an example of server to server connection. The AI Generated content created is entirely fictional. Instructor / Institution is not liable for any generated content from the example.
 
 ## To run this project
 - Tools > NuGet Package Manager > Package Manager Console
