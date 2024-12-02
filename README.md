@@ -8,6 +8,8 @@ This example utilizes our services and dtos in the previous examples to organize
 - Add Customer, Order records
 - Interact with Ordered Items, Products, Categories through webpages.
 
+
+
 ## Index of Examples
 1. [Core Entity Framework](https://github.com/christinebittle/CoreEntityFramework)
 2. [Core API](https://github.com/christinebittle/CoreAPI)
@@ -19,6 +21,7 @@ This example utilizes our services and dtos in the previous examples to organize
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 
 ## Test Your Understanding!
