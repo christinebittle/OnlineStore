@@ -29,7 +29,7 @@ This example includes a worker that periodically calls [openai.com](Open AI) API
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
-10. [Workers and Server to Server Communication[]()](https://github.com/christinebittle/OnlineStore/tree/worker)
+10. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
 - Create your own worker that independently logs a 'Hello' message every thirty seconds
