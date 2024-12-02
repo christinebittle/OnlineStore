@@ -25,6 +25,7 @@ This example includes conditional rendering on the product page, and a paginatio
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
 10. [Client Integration](https://github.com/christinebittle/OnlineStore/tree/client-integration)
+11. [Workers and Server to Server Communication](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
 - Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
