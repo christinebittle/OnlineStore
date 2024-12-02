@@ -1,4 +1,4 @@
-# .NET Core Conditional Access
+# .NET Core Workers and Server Integration
 This example includes a worker that periodically calls [openai.com](Open AI) API to generate product descriptions.
 
 > [!WARNING]
