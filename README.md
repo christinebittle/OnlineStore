@@ -1,5 +1,5 @@
 # .NET Core Conditional Access
-This example includes a worker that periodically calls an open AI API to generate product descriptions.
+This example includes a worker that periodically calls [openai.com](Open AI) API to generate product descriptions.
 
 > [!WARNING]
 > This example is only meant to demonstrate server to server connection. The AI Generated content created is entirely fictional. Instructor / Institution is not liable for any generated content from the example, it is for entertainment purposes only.
@@ -15,6 +15,8 @@ This example includes a worker that periodically calls an open AI API to generat
 - Associate AspNetUser with admin AspNetRole in AspNetUserRoles
 - Interact with products as an admin vs. non admin
 - Add 5 or more product records with images
+- If desired, get a developer key from Open AI (usage is not free)
+- Running the project will periodically update products with AI descriptions
   
 
 ## Index of Examples
@@ -27,7 +29,8 @@ This example includes a worker that periodically calls an open AI API to generat
 7. [Role Based Authorization](https://github.com/christinebittle/OnlineStore/tree/Authentication2)
 8. [Conditional Access](https://github.com/christinebittle/OnlineStore/tree/conditional-access)
 9. [Conditional Rendering](https://github.com/christinebittle/OnlineStore/tree/conditional-rendering)
+10. [Workers and Server to Server Communication[]()](https://github.com/christinebittle/OnlineStore/tree/worker)
 
 ## Test Your Understanding!
-- Modify views to hide links to "new" and "edit" products, categories if user is not an administrator
+- Create your own worker that independently logs a 'Hello' message every thirty seconds
 
