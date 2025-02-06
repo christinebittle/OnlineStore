@@ -119,15 +119,11 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
+            // Views/ProductPage/ConfirmDelete.cshtml
+            // find information about this product
             ProductDto? ProductDto = await _productService.FindProduct(id);
-            if (ProductDto == null)
-            {
-                return View("Error");
-            }
-            else
-            {
-                return View(ProductDto);
-            }
+
+            return View(ProductDto);
         }
 
         //POST ProductPage/Delete/{id}

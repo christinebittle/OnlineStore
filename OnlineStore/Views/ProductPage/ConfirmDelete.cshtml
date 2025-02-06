@@ -1,18 +1,9 @@
 ﻿@model OnlineStore.Models.ProductDto
 
+<h1>Confirm Delete?</h1>
+<p>@Model.ProductSKU</p>
 
+<form method="POST" action="/ProductPage/Delete/@Model.ProductId">
+    <input style="background:red; color:white;" type="submit" value="Confirm Delete" />
 
-<div class="row">
-    <h2>Confirm Delete</h2>
-    <p>Are you sure you want to delete this product?</p>
-
-    <div>
-        <label>Name</label>
-        <div>@Model.ProductName</div>
-    </div>
-        
-    <form method="POST" action="/ProductPage/Delete/@Model.ProductId">
-        <input type="submit" value="Delete" class="alert-warning" />
-
-    </form>
-</div>
+</form>
