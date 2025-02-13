@@ -3,6 +3,8 @@ using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace OnlineStore.Controllers
 {
     public class ProductPageController : Controller
@@ -62,6 +64,7 @@ namespace OnlineStore.Controllers
         }
 
         // GET ProductPage/New
+        
         public ActionResult New()
         {
             return View();
@@ -70,6 +73,7 @@ namespace OnlineStore.Controllers
 
         // POST ProductPage/Add
         [HttpPost]
+        
         public async Task<IActionResult> Add(ProductDto ProductDto)
         {
             ServiceResponse response = await _productService.AddProduct(ProductDto);

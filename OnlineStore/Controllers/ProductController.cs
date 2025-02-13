@@ -9,6 +9,8 @@ using OnlineStore;
 using OnlineStore.Models;
 using OnlineStore.Interfaces;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace CoreEntityFramework.Controllers
 {
     [Route("api/[controller]")]
@@ -131,7 +133,9 @@ namespace CoreEntityFramework.Controllers
         /// </returns>
         /// <example>
         /// POST: api/Product/Add
-        /// Request Headers: Content-Type: application/json
+        /// Request Headers: 
+        /// Content-Type: application/json
+        /// Cookie: .AspNetCore.Identity.Application={token}
         /// Request Body: {ProductDto}
         /// ->
         /// Response Code: 201 Created
