@@ -42,24 +42,30 @@
                 {
                     <li style="margin-bottom:10px">
                         <a href="/CategoryPage/Details/@CategoryDto.CategoryId">@CategoryDto.CategoryName</a>
-                        <form method="POST" action="/ProductPage/UnlinkFromCategory" style="display:inline">
-                            <input style="display:none" name="productId" value="@Model.Product.ProductId" />
-                            <input style="display:none" name="categoryId" value="@CategoryDto.CategoryId" />
-                            <input type="submit" value="Remove" />
-                        </form>
+                        @if (Model.IsAdmin)
+                        {
+                            <form method="POST" action="/ProductPage/UnlinkFromCategory" style="display:inline">
+                                <input style="display:none" name="productId" value="@Model.Product.ProductId" />
+                                <input style="display:none" name="categoryId" value="@CategoryDto.CategoryId" />
+                                <input type="submit" value="Remove" />
+                            </form>
+                        }
                     </li>
                 }
             </ul>
-            <form method="POST" action="/ProductPage/LinkToCategory">
-                <input style="display:none" name="productId" value="@Model.Product.ProductId" />
-                <select name="categoryId">
-                    @foreach(var CategoryDto in Model.AllCategories)
-                    {
-                       <option value="@CategoryDto.CategoryId">@CategoryDto.CategoryName</option> 
-                    }
-                </select>
-                <input type="submit" value="Add" />
-            </form>
+            @if (Model.IsAdmin)
+            {
+                <form method="POST" action="/ProductPage/LinkToCategory">
+                    <input style="display:none" name="productId" value="@Model.Product.ProductId" />
+                    <select name="categoryId">
+                        @foreach(var CategoryDto in Model.AllCategories)
+                        {
+                           <option value="@CategoryDto.CategoryId">@CategoryDto.CategoryName</option> 
+                        }
+                    </select>
+                    <input type="submit" value="Add" />
+                </form>
+            }
         </div>
         <div>
             @if (Model.ProductOrderedItems != null && Model.IsAdmin)

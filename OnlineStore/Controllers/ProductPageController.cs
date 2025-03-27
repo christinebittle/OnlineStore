@@ -61,7 +61,9 @@ namespace OnlineStore.Controllers
             ViewModel.Products = ProductDtos;
             ViewModel.MaxPage = MaxPage; 
             ViewModel.Page = PageNum;
+            
 
+            // TODO: use customer service GetCustomerProfile instead
             IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
             if (User != null) ViewModel.isAdmin = await _userManager.IsInRoleAsync(User, "admin");
             else ViewModel.isAdmin = false;

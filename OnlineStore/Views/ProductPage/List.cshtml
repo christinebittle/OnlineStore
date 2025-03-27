@@ -7,7 +7,9 @@
 <div style="margin-bottom:20px;">
     @if (Model.MaxPage > 0)
     {
-        <a href="/ProductPage/List?PageNum=@(Model.Page - 1)">&laquo; Prev</a> <span>Page @(Model.Page + 1) of @(Model.MaxPage + 1)</span> <a href="/ProductPage/List?PageNum=@(Model.Page + 1)">Next &raquo;</a>
+        <a href="/ProductPage/List?PageNum=@(Model.Page - 1)">&laquo; Prev</a> 
+        <span>Page @(Model.Page + 1) of @(Model.MaxPage + 1)</span> 
+        <a href="/ProductPage/List?PageNum=@(Model.Page + 1)">Next &raquo;</a>
     }
 </div>
 <div class="row">

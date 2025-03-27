@@ -12,5 +12,7 @@
         public int Page { get; set; }
 
         public int MaxPage { get; set; }
+
+        
     }
 }
