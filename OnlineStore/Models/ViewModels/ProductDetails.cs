@@ -17,5 +17,8 @@
         // All order items for this product
         public IEnumerable<OrderItemDto>? ProductOrderedItems { get; set; }
 
+        // determines whether the user is an admin
+        public bool IsAdmin { get; set; }
+
     }
 }

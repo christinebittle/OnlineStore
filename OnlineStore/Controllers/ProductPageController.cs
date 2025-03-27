@@ -82,6 +82,11 @@ namespace OnlineStore.Controllers
             //need the ordered items for this product
             IEnumerable<OrderItemDto?> OrderItems = await _orderItemService.ListOrderItemsForProduct(id);
 
+            bool IsAdmin = false;
+            IdentityUser? User = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if (User != null) IsAdmin = await _userManager.IsInRoleAsync(User, "admin");
+            
+
             if (ProductDto == null)
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find Product"] });
@@ -94,7 +99,8 @@ namespace OnlineStore.Controllers
                     Product = ProductDto,
                     ProductCategories = AssociatedCategories,
                     AllCategories = Categories,
-                    ProductOrderedItems = OrderItems
+                    ProductOrderedItems = OrderItems,
+                    IsAdmin = IsAdmin
                 };
                 return View(ProductInfo);
             }

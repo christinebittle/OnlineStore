@@ -1,9 +1,23 @@
 ﻿@model OnlineStore.Models.ViewModels.ProductDetails
 
+@{
+    string color = "green";
+    if (!Model.IsAdmin) color = "red";
+}
+<div style="background: @color; font-weight:bold; color:white;">
+    Is Administrator: @Model.IsAdmin
+</div>
 
-<a href="/ProductPage/Delete/@Model.Product.ProductId">Delete</a>
-<a href="/ProductPage/Edit/@Model.Product.ProductId">Edit</a>
+@if (Model.IsAdmin)
+{
+    <a href="/ProductPage/ConfirmDelete/@Model.Product.ProductId">Delete</a>
+    <a href="/ProductPage/Edit/@Model.Product.ProductId">Edit</a>
+}
+
 <a href="/ProductPage/List">Back</a>
+
+
+
 <div class="row">
     <div class="col-md-6">
         <div>
@@ -48,7 +62,7 @@
             </form>
         </div>
         <div>
-            @if (Model.ProductOrderedItems != null)
+            @if (Model.ProductOrderedItems != null && Model.IsAdmin)
             {
                 <h3>Ordered:</h3>
                 <div>
